@@ -11,8 +11,6 @@ import java.util.List;
 
 public abstract class Level {
 
-    private boolean isFinished = false;
-
     private List<Drawable> drawables;
     private List<Collidible> collidibles;
     private List<Graviteable> graviteables;
@@ -52,6 +50,8 @@ public abstract class Level {
                 }
             }
         }
+
+        tearDown();
 
         pencil.exitPrivateMode();
     }
@@ -129,6 +129,9 @@ public abstract class Level {
         }
 
         return nearestCollidible;
+    }
+
+    void tearDown() {
     }
 
 }

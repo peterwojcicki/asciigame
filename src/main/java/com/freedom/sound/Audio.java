@@ -6,11 +6,25 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Callable;
 
 public class Audio {
-    public void playIndefinitely(String filename) {
-        while (true) {
-            playOnce(filename);
+
+    private SourceDataLine sourceLine;
+
+    public void playIndefinitely(String filename, Callable<Boolean> stopCondition) {
+        try {
+            while (!stopCondition.call()) {
+                playOnce(filename);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void stop() {
+        if (sourceLine != null) {
+            sourceLine.stop();
         }
     }
 
@@ -23,7 +37,7 @@ public class Audio {
 
             int BUFFER_SIZE = 128000;
             AudioFormat audioFormat = null;
-            SourceDataLine sourceLine = null;
+            sourceLine = null;
 
             audioFormat = audioStream.getFormat();
 
@@ -52,4 +66,5 @@ public class Audio {
             throw new RuntimeException(e);
         }
     }
+
 }

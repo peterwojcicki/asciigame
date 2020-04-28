@@ -5,14 +5,19 @@ import com.freedom.model.*;
 import com.freedom.sound.Audio;
 
 public class Level1 extends Level {
+
+    private Thread backgroundSound;
+    private Audio audio;
+
     public Level1() {
         super("Undead City", new Point(30, 5));
     }
 
     @Override
     void init() {
-
-        new Thread(() -> new Audio().playIndefinitely("sounds/forest.wav")).start();
+        audio = new Audio();
+        backgroundSound = new Thread(() -> audio.playIndefinitely("sounds/forest.wav", () -> this.isLevelCompleted()));
+        backgroundSound.start();
 
         add(new Flat2(new Point(29, -18)));
         add(new Tree1(new Point(8, -13)));
@@ -24,4 +29,10 @@ public class Level1 extends Level {
             add(new Clouds(new Point(-100 + 80 * i, -20 + 2 * (i % 2))));
         }
     }
+
+    @Override
+    void tearDown() {
+        audio.stop();
+    }
+
 }

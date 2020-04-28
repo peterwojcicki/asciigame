@@ -1,6 +1,7 @@
 package com.freedom.levels;
 
 import com.freedom.model.Point;
+import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -18,30 +19,13 @@ public class Menu extends Level {
         super("Undead City", new Point(30, 5));
         levels = new ArrayList<>();
         List<String> level1 = new ArrayList<>();
-        level1.add("                                                                                 ");
-        level1.add("                        (                     (          (             )         ");
-        level1.add("          (             )\\ )     (       )    )\\ )       )\\    (    ( /(   (     ");
-        level1.add("          )\\    (      (()/(    ))\\   ( /(   (()/(     (((_)   )\\   )\\())  )\\ )  ");
-        level1.add("       _ ((_)   )\\ )    ((_))  /((_)  )(_))   ((_))    )\\___  ((_) (_))/  (()/(  ");
-        level1.add("      | | | |  _(_/(    _| |  (_))   ((_)_    _| |    ((/ __|  (_) | |_    )(_)) ");
-        level1.add("      | |_| | | ' \\)) / _` |  / -_)  / _` | / _` |     | (__   | | |  _|  | || | ");
-        level1.add("       \\___/  |_||_|  \\__,_|  \\___|  \\__,_| \\__,_|      \\___|  |_|  \\__|   \\_, | ");
-        level1.add("                                                                           |__/  ");
+        level1.add("Undead City");
 
         levels.add(level1);
 
         List<String> level2 = new ArrayList<>();
-        level2.add("                                             )             (                                        ");
-        level2.add("                 (    (                    ( /(    (        )\\ )                                     ");
-        level2.add(" (   (       )   )\\   )\\     (    (        )\\())   )\\ )    (()/(    (           (  (                 ");
-        level2.add(" )\\  )\\   ( /(  ((_) ((_)   ))\\   )\\ )    ((_)\\   (()/(     /(_))   )(     (    )\\))(     (      (   ");
-        level2.add("((_)((_)  )(_))  _    _    /((_) (()/(      ((_)   /(_))   (_))_   (()\\    )\\  ((_)()\\    )\\ )   )\\  ");
-        level2.add("\\ \\ / /  ((_)_  | |  | |  (_))    )(_))    / _ \\  (_) _|    |   \\   ((_)  ((_) _(()((_)  _(_/(  ((_) ");
-        level2.add(" \\ V /   / _` | | |  | |  / -_)  | || |   | (_) |  |  _|    | |) | | '_| / _ \\ \\ V  V / | ' \\)) (_-< ");
-        level2.add("  \\_/    \\__,_| |_|  |_|  \\___|   \\_, |    \\___/   |_|      |___/  |_|   \\___/  \\_/\\_/  |_||_|  /__/ ");
-        level2.add("                                  |__/                                                               ");
+        level2.add("Lake Of Drowns");
         levels.add(level2);
-
 
         currentOption = 0;
     }
@@ -55,6 +39,7 @@ public class Menu extends Level {
         clearScreen();
 
         int width = pencil.getTerminalSize().getColumns();
+        int height = pencil.getTerminalSize().getRows();
 
         pencil.setForegroundColor(TextColor.ANSI.WHITE);
         pencil.moveToAbsolute(width / 2 - 32, 5);
@@ -76,20 +61,26 @@ public class Menu extends Level {
         pencil.println("            \\   \\__, \\_     `~'     _/ .__/   /");
         pencil.println("             `-._,-'   `-._______,-'   `-._,-'");
 
-        pencil.moveToAbsolute(width / 2 - 40, 27);
+        pencil.moveToAbsolute(width / 2 - 10, 27);
         for (int i = 0; i < levels.size(); i++) {
 
+            List<String> level = levels.get(i);
             if (currentOption == i) {
                 pencil.setForegroundColor(TextColor.ANSI.RED);
+
+                level.forEach(line -> pencil.println("" + Symbols.TRIANGLE_RIGHT_POINTING_BLACK + " " + line));
             } else {
                 pencil.setForegroundColor(TextColor.ANSI.WHITE);
+
+                level.forEach(line -> pencil.println("  " + line));
             }
 
-
-            List<String> level = levels.get(i);
-            level.forEach(line -> pencil.println(line));
             pencil.println("");
         }
+
+        pencil.setForegroundColor(TextColor.ANSI.WHITE);
+        pencil.moveToAbsolute(width / 2 - 14, height - 2);
+        pencil.println("Copyright by DragonRider1666");
 
         pencil.flush();
     }
@@ -118,11 +109,15 @@ public class Menu extends Level {
                 if (keyStroke.getKeyType().equals(KeyType.ArrowUp)) {
                     if (currentOption > 0) {
                         currentOption = currentOption - 1;
+                    } else {
+                        currentOption = levels.size() - 1;
                     }
                 }
                 if (keyStroke.getKeyType().equals(KeyType.ArrowDown)) {
                     if (currentOption < levels.size() - 1) {
                         currentOption = currentOption + 1;
+                    } else {
+                        currentOption = 0;
                     }
                 }
                 if (keyStroke.getKeyType().equals(KeyType.Enter)) {
