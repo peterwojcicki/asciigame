@@ -4,7 +4,9 @@ import com.freedom.levels.Menu;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        new Menu().play();
-        new Level1().play();
+        while (true) {
+            new Menu().play();
+            new Level1().play();
+        }
     }
 }
