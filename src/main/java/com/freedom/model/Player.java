@@ -181,8 +181,15 @@ public class Player extends Drawable implements Collidible, Graviteable {
         }
     }
 
-    public void jump() {
-        for (int i = 0; i < 10; i++) {
+    public void jump(Collidible nearestCollidibleAbove) {
+        int jumpHeight = 10;
+        if (nearestCollidibleAbove != null) {
+            int headroom = getUpperLeft().getY() - nearestCollidibleAbove.getLowerRight().getY();
+            if (headroom < jumpHeight) {
+                jumpHeight = headroom;
+            }
+        }
+        for (int i = 0; i < jumpHeight; i++) {
             position = position.up();
         }
     }

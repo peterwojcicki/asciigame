@@ -23,6 +23,7 @@ public class Level1 extends Level {
         add(new Tree1(new Point(8, -13)));
         add(new Sky());
 //        add(new Grass());
+        add(new Ground(new Point(-2, -6), 10, 1));
         add(new Ground(new Point(-2, 1), 20, 1));
         add(new Ground(new Point(15, 5), 40, 1));
         for (int i = 0; i < 10; i++) {

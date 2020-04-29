@@ -46,7 +46,7 @@ public abstract class Level {
                     player.moveRight();
                 }
                 if (keyStroke.getKeyType().equals(KeyType.ArrowUp)) {
-                    player.jump();
+                    player.jump(getNearestCollidibleAbove(player));
                 }
             }
         }
@@ -85,7 +85,8 @@ public abstract class Level {
         for (Graviteable graviteable : graviteables) {
             Collidible nearestCollidible = getNearestCollidibleBelow(graviteable);
             if (nearestCollidible != null) {
-                if (!nearestCollidible.isTouchingVertically(graviteable)
+                // bear in mind it's the graviteable that is falling - so the nearest collidible will be touching from below
+                if (!nearestCollidible.isTouchingVerticallyFromBelow(graviteable)
                         && nearestCollidible.getUpperLeft().isLowerThan(graviteable.getLowerRight())) {
                     graviteable.fall();
                 }
@@ -108,18 +109,39 @@ public abstract class Level {
         });
     }
 
-    private Collidible getNearestCollidibleBelow(Graviteable graviteable) {
+    private Collidible getNearestCollidibleAbove(Graviteable graviteable) {
         Collidible nearestCollidible = null;
 
         for (Collidible collidible : collidibles) {
 
-            // ignore collidibles which are not underneath the falling item
             if (collidible.getUpperLeft().getX() > graviteable.getPosition().getX()
                     || collidible.getLowerRight().getX() < graviteable.getPosition().getX()) {
                 continue;
             }
 
-            if (collidible.isTouchingVertically(graviteable)) {
+            if (collidible.isTouchingVerticallyFromAbove(graviteable)) {
+                return collidible;
+            } else if (collidible.getLowerRight().isHigherThan(graviteable.getUpperLeft())) {
+                if (nearestCollidible == null || nearestCollidible.getLowerRight().isHigherThan(collidible.getLowerRight())) {
+                    nearestCollidible = collidible;
+                }
+            }
+        }
+
+        return nearestCollidible;
+    }
+
+    private Collidible getNearestCollidibleBelow(Graviteable graviteable) {
+        Collidible nearestCollidible = null;
+
+        for (Collidible collidible : collidibles) {
+
+            if (collidible.getUpperLeft().getX() > graviteable.getPosition().getX()
+                    || collidible.getLowerRight().getX() < graviteable.getPosition().getX()) {
+                continue;
+            }
+
+            if (collidible.isTouchingVerticallyFromBelow(graviteable)) {
                 return collidible;
             } else if (collidible.getUpperLeft().isLowerThan(graviteable.getLowerRight())) {
                 if (nearestCollidible == null || nearestCollidible.getUpperLeft().isLowerThan(collidible.getUpperLeft())) {

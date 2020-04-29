@@ -47,6 +47,6 @@ public class Ground extends Drawable implements Collidible {
 
     @Override
     public Point getLowerRight() {
-        return new Point(getPosition().getX() + width, getPosition().getY() + height);
+        return new Point(getPosition().getX() + width - 1, getPosition().getY() + height- 1);
     }
 }
