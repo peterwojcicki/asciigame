@@ -14,8 +14,11 @@ public interface Collidible {
         return other.getLowerRight().getY() + 1 == getUpperLeft().getY();
     }
 
-    default boolean isTouchingHorizontally(Collidible other) {
-        return other.getLowerRight().getX() + 1 == getUpperLeft().getX()
-                || getLowerRight().getX() + 1 == other.getUpperLeft().getX();
+    default boolean isTouchingHorizontallyFromLeft(Collidible other) {
+        return getLowerRight().getX() + 1 == other.getUpperLeft().getX();
+    }
+
+    default boolean isTouchingHorizontallyFromRight(Collidible other) {
+        return getLowerRight().getX() == other.getUpperLeft().getX() + 1;
     }
 }

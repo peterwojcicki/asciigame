@@ -40,4 +40,12 @@ public class Point {
     public boolean isHigherThan(Point point) {
         return y < point.getY();
     }
+
+    public boolean isLeftOf(Point point) {
+        return x < point.getX();
+    }
+
+    public boolean isRightOf(Point point) {
+        return x > point.getX();
+    }
 }

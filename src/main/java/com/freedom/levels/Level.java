@@ -40,10 +40,10 @@ public abstract class Level {
             KeyStroke keyStroke = pencil.pollInput();
             if (keyStroke != null) {
                 if (keyStroke.getKeyType().equals(KeyType.ArrowLeft)) {
-                    player.moveLeft();
+                    player.moveLeft(getNearestCollidibleLeft(player));
                 }
                 if (keyStroke.getKeyType().equals(KeyType.ArrowRight)) {
-                    player.moveRight();
+                    player.moveRight(getNearestCollidibleRight(player));
                 }
                 if (keyStroke.getKeyType().equals(KeyType.ArrowUp)) {
                     player.jump(getNearestCollidibleAbove(player));
@@ -145,6 +145,50 @@ public abstract class Level {
                 return collidible;
             } else if (collidible.getUpperLeft().isLowerThan(graviteable.getLowerRight())) {
                 if (nearestCollidible == null || nearestCollidible.getUpperLeft().isLowerThan(collidible.getUpperLeft())) {
+                    nearestCollidible = collidible;
+                }
+            }
+        }
+
+        return nearestCollidible;
+    }
+
+    private Collidible getNearestCollidibleLeft(Graviteable graviteable) {
+        Collidible nearestCollidible = null;
+
+        for (Collidible collidible : collidibles) {
+
+            if (collidible.getUpperLeft().getY() > graviteable.getPosition().getY()
+                    || collidible.getLowerRight().getY() < graviteable.getPosition().getY()) {
+                continue;
+            }
+
+            if (collidible.isTouchingHorizontallyFromLeft(graviteable)) {
+                return collidible;
+            } else if (collidible.getLowerRight().isLeftOf(graviteable.getUpperLeft())) {
+                if (nearestCollidible == null || nearestCollidible.getLowerRight().isLeftOf(collidible.getLowerRight())) {
+                    nearestCollidible = collidible;
+                }
+            }
+        }
+
+        return nearestCollidible;
+    }
+
+    private Collidible getNearestCollidibleRight(Graviteable graviteable) {
+        Collidible nearestCollidible = null;
+
+        for (Collidible collidible : collidibles) {
+
+            if (collidible.getUpperLeft().getY() > graviteable.getPosition().getY()
+                    || collidible.getLowerRight().getY() < graviteable.getPosition().getY()) {
+                continue;
+            }
+
+            if (collidible.isTouchingHorizontallyFromRight(graviteable)) {
+                return collidible;
+            } else if (collidible.getUpperLeft().isRightOf(graviteable.getLowerRight())) {
+                if (nearestCollidible == null || nearestCollidible.getUpperLeft().isRightOf(collidible.getUpperLeft())) {
                     nearestCollidible = collidible;
                 }
             }

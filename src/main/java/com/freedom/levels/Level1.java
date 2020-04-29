@@ -10,7 +10,7 @@ public class Level1 extends Level {
     private Audio audio;
 
     public Level1() {
-        super("Undead City", new Point(30, 5));
+        super("Undead City", new Point(40, 5));
     }
 
     @Override
@@ -26,6 +26,7 @@ public class Level1 extends Level {
         add(new Ground(new Point(-2, -6), 10, 1));
         add(new Ground(new Point(-2, 1), 20, 1));
         add(new Ground(new Point(15, 5), 40, 1));
+        add(new Ground(new Point(25, 0), 1, 10));
         for (int i = 0; i < 10; i++) {
             add(new Clouds(new Point(-100 + 80 * i, -20 + 2 * (i % 2))));
         }

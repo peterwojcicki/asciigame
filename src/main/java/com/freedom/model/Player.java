@@ -141,21 +141,39 @@ public class Player extends Drawable implements Collidible, Graviteable {
         pencil.print('A');
     }
 
-    public void moveLeft() {
+    public void moveLeft(Collidible nearestCollidibleLeft) {
         if (movement == Movement.NONE) {
             direction = Direction.LEFT;
             movement = Movement.MOVING;
-            position = position.left();
-            position = position.left();
+
+            int steps = 2;
+            if (nearestCollidibleLeft != null) {
+                int spaceToTheLeft = position.getX() - nearestCollidibleLeft.getLowerRight().getX() - 1;
+                if (spaceToTheLeft < steps) {
+                    steps = spaceToTheLeft;
+                }
+            }
+            for (int i = 0; i < steps; i++) {
+                position = position.left();
+            }
         }
     }
 
-    public void moveRight() {
+    public void moveRight(Collidible nearestCollidibleRight) {
         if (movement == Movement.NONE) {
             direction = Direction.RIGHT;
             movement = Movement.MOVING;
-            position = position.right();
-            position = position.right();
+
+            int steps = 2;
+            if (nearestCollidibleRight != null) {
+                int spaceToTheRight = nearestCollidibleRight.getUpperLeft().getX() - position.getX() - 1;
+                if (spaceToTheRight < steps) {
+                    steps = spaceToTheRight;
+                }
+            }
+            for (int i = 0; i < steps; i++) {
+                position = position.right();
+            }
         }
     }
 
