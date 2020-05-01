@@ -19,10 +19,12 @@ public abstract class Level implements DrawableRegister {
     private List<Graviteable> graviteables;
     private List<Enemy> enemies;
     private List<Projectile> projectiles;
+    private List<Collectible> collectibles;
+
     private SoundManager soundManager;
 
     private Point finish;
-    private final Player player;
+    final Player player;
     final Pencil pencil;
 
     public Level(String name, Point finish) {
@@ -32,6 +34,7 @@ public abstract class Level implements DrawableRegister {
         graviteables = new ArrayList<>();
         enemies = new ArrayList<>();
         projectiles = new ArrayList<>();
+        collectibles = new ArrayList<>();
 
         soundManager = new SoundManager();
 
@@ -104,6 +107,10 @@ public abstract class Level implements DrawableRegister {
         if (drawable instanceof Projectile) {
             projectiles.add((Projectile) drawable);
         }
+
+        if (drawable instanceof Collectible) {
+            collectibles.add((Collectible) drawable);
+        }
     }
 
     public void render() {
@@ -130,6 +137,12 @@ public abstract class Level implements DrawableRegister {
             projectile.move(getNearestCollidibleLeft(projectile), getNearestCollidibleRight(projectile));
         }
 
+        for (Collectible collectible : collectibles) {
+            if (collectible.isWithinReach(player)) {
+                collectible.collect();
+            }
+        }
+
         draw(pencil);
         pencil.flush();
     }
@@ -142,6 +155,8 @@ public abstract class Level implements DrawableRegister {
         collidibles.removeIf(p -> p instanceof Enemy && ((Enemy) p).isDead());
 
         drawables.removeIf(p -> p instanceof Projectile && !((Projectile) p).isActive());
+
+        drawables.removeIf(p -> p instanceof Collectible && ((Collectible) p).isCollected());
     }
 
     private void draw(Pencil pencil) {

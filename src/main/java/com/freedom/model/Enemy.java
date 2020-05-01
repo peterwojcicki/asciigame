@@ -169,7 +169,7 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
     public void move(Player player) {
         int steps = 1;
 
-        if (isCloseEnoughToPlayer(player) && globalFrame - inflictedInjuryAtFrame > 500) {
+        if (!isDead && isCloseEnoughToPlayer(player) && globalFrame - inflictedInjuryAtFrame > 500) {
             player.injure();
             inflictedInjuryAtFrame = globalFrame;
         }

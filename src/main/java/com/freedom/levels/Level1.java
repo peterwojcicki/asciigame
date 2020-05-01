@@ -39,6 +39,11 @@ public class Level1 extends Level {
         add(new Enemy(platformWithEnemies1));
 
         add(new Platform(new Point(25, 0), 1, 10, BRICK));
+
+
+        add(new Collectible(new Point(50, 13), (Void) -> player.increaseHealth()));
+
+
         for (int i = 0; i < 10; i++) {
             add(new Clouds(new Point(-100 + 80 * i, -20 + 2 * (i % 2))));
         }

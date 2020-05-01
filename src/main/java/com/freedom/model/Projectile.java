@@ -6,7 +6,7 @@ import com.googlecode.lanterna.TextColor;
 
 public class Projectile extends Drawable implements Collidible, DamageInflicting {
 
-    public static final int MAX_RANGE = 20;
+    public static final int MAX_RANGE = 50;
     long globalFrame = 0;
     long localFrame = 0;
     Direction direction;

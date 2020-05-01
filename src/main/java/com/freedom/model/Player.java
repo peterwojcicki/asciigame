@@ -232,6 +232,19 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void injure() {
-        health = health - 10;
+        if (health >= 10) {
+            health = health - 10;
+        } else {
+            health = 0;
+        }
+    }
+
+    public void increaseHealth() {
+        if (health <= 90) {
+            health += 10;
+        } else {
+
+            health = 100;
+        }
     }
 }
