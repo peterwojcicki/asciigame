@@ -200,7 +200,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void jump(Collidible nearestCollidibleAbove) {
-        int jumpHeight = 10;
+        int jumpHeight = 7;
         if (nearestCollidibleAbove != null) {
             int headroom = getUpperLeft().getY() - nearestCollidibleAbove.getLowerRight().getY();
             if (headroom < jumpHeight) {
