@@ -14,6 +14,8 @@ public class Player extends Drawable implements Collidible, Graviteable {
     final int height = 3;
     private DrawableRegister drawableRegister;
 
+    private int health = 100;
+
     private Audio arrowSound;
 
     public Player(Point initialPosition, DrawableRegister drawableRegister) {
@@ -223,5 +225,13 @@ public class Player extends Drawable implements Collidible, Graviteable {
         drawableRegister.add(new Projectile(getPosition().down(), direction));
 
         new Thread(() -> arrowSound.playOnce()).start();
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void injure() {
+        health = health - 10;
     }
 }

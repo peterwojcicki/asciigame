@@ -19,6 +19,7 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
     private int life = 100;
     private boolean isDead = false;
     private Audio dyingSound;
+    private long inflictedInjuryAtFrame;
 
     public Enemy(Collidible assignedArea) {
         super(Integer.MAX_VALUE - 10);
@@ -165,8 +166,14 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
         pencil.print('A');
     }
 
-    public void move() {
+    public void move(Player player) {
         int steps = 1;
+
+        if (isCloseEnoughToPlayer(player) && globalFrame - inflictedInjuryAtFrame > 500) {
+            player.injure();
+            inflictedInjuryAtFrame = globalFrame;
+        }
+
         if (!isDead && globalFrame % speed == 0) {
 
             if (direction == Direction.LEFT) {
@@ -189,6 +196,11 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
                 }
             }
         }
+    }
+
+    private boolean isCloseEnoughToPlayer(Player player) {
+        return Math.abs(player.getPosition().getX() - getPosition().getX()) < 2
+                && Math.abs(player.getPosition().getY() - getPosition().getY()) < 2;
     }
 
     @Override

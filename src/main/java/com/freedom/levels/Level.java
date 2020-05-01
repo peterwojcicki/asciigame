@@ -1,5 +1,6 @@
 package com.freedom.levels;
 
+import com.freedom.display.Inventory;
 import com.freedom.display.Pencil;
 import com.freedom.model.*;
 import com.freedom.sound.SoundManager;
@@ -38,12 +39,13 @@ public abstract class Level implements DrawableRegister {
         pencil = new Pencil(player);
 
         add(player);
+        add(new Inventory(player));
     }
 
     public void play() throws Exception {
         init();
 
-        while (!isLevelCompleted()) {
+        while (!isLevelCompleted() && player.getHealth() > 0) {
             render();
             Thread.sleep(10);
 
@@ -121,7 +123,7 @@ public abstract class Level implements DrawableRegister {
         removeInactiveProjectiles();
 
         for (Enemy enemy : enemies) {
-            enemy.move();
+            enemy.move(player);
         }
 
         for (Projectile projectile : projectiles.stream().filter(p -> p.isActive()).collect(Collectors.toList())) {
