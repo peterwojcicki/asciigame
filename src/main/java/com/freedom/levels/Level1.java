@@ -15,7 +15,7 @@ public class Level1 extends Level {
     private Audio audio;
 
     public Level1() {
-        super("Undead City", new Point(40, 5));
+        super("Undead City", new Point(200, 5));
     }
 
     @Override
@@ -31,6 +31,12 @@ public class Level1 extends Level {
         add(new Platform(new Point(-2, -6), 10, 1, GRASS));
         add(new Platform(new Point(-2, 1), 20, 1, BRICK));
         add(new Platform(new Point(15, 5), 40, 1, BRICK));
+
+        Platform platformWithEnemies1 = new Platform(new Point(25, 10), 50, 1, BRICK);
+        add(platformWithEnemies1);
+
+        add(new Enemy(platformWithEnemies1));
+
         add(new Platform(new Point(25, 0), 1, 10, BRICK));
         for (int i = 0; i < 10; i++) {
             add(new Clouds(new Point(-100 + 80 * i, -20 + 2 * (i % 2))));

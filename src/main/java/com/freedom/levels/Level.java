@@ -14,6 +14,8 @@ public abstract class Level {
     private List<Drawable> drawables;
     private List<Collidible> collidibles;
     private List<Graviteable> graviteables;
+    private List<Enemy> enemies;
+
     private Point finish;
     private final Player player;
     final Pencil pencil;
@@ -23,6 +25,7 @@ public abstract class Level {
         drawables = new ArrayList<>();
         collidibles = new ArrayList<>();
         graviteables = new ArrayList<>();
+        enemies = new ArrayList<>();
 
         player = new Player(new Point(0, -4));
         pencil = new Pencil(player);
@@ -78,8 +81,11 @@ public abstract class Level {
         if (drawable instanceof Graviteable) {
             graviteables.add((Graviteable) drawable);
         }
-    }
 
+        if (drawable instanceof Enemy) {
+            enemies.add((Enemy) drawable);
+        }
+    }
 
     public void render() {
         for (Graviteable graviteable : graviteables) {
@@ -93,6 +99,10 @@ public abstract class Level {
             } else {
                 graviteable.fall();
             }
+        }
+
+        for (Enemy enemy : enemies) {
+            enemy.move();
         }
 
         draw(pencil);

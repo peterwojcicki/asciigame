@@ -21,4 +21,12 @@ public interface Collidible {
     default boolean isTouchingHorizontallyFromRight(Collidible other) {
         return getLowerRight().getX() == other.getUpperLeft().getX() + 1;
     }
+
+    default int getWidth() {
+        return getLowerRight().getX() - getUpperLeft().getX() + 1;
+    }
+
+    default int getHeight() {
+        return getLowerRight().getY() - getUpperLeft().getY() + 1;
+    }
 }
