@@ -2,6 +2,7 @@ package com.freedom.levels;
 
 import com.freedom.display.Pencil;
 import com.freedom.model.*;
+import com.freedom.sound.SoundManager;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
@@ -17,6 +18,7 @@ public abstract class Level implements DrawableRegister {
     private List<Graviteable> graviteables;
     private List<Enemy> enemies;
     private List<Projectile> projectiles;
+    private SoundManager soundManager;
 
     private Point finish;
     private final Player player;
@@ -29,6 +31,8 @@ public abstract class Level implements DrawableRegister {
         graviteables = new ArrayList<>();
         enemies = new ArrayList<>();
         projectiles = new ArrayList<>();
+
+        soundManager = new SoundManager();
 
         player = new Player(new Point(0, -4), this);
         pencil = new Pencil(player);

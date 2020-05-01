@@ -1,6 +1,7 @@
 package com.freedom.model;
 
 import com.freedom.display.Pencil;
+import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
@@ -13,6 +14,8 @@ public class Player extends Drawable implements Collidible, Graviteable {
     final int height = 3;
     private DrawableRegister drawableRegister;
 
+    private Audio arrowSound;
+
     public Player(Point initialPosition, DrawableRegister drawableRegister) {
         super(Integer.MAX_VALUE);
         this.drawableRegister = drawableRegister;
@@ -20,6 +23,8 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
         this.direction = Direction.RIGHT;
         this.movement = Movement.NONE;
+
+        arrowSound = new Audio("sounds/arrow.wav");
     }
 
     @Override
@@ -216,5 +221,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
     public void shoot() {
         drawableRegister.add(new Projectile(getPosition().down(), direction));
+
+        new Thread(() -> arrowSound.playOnce()).start();
     }
 }

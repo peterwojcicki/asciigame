@@ -11,8 +11,7 @@ public class Level1 extends Level {
     private final static Style BRICK = new Style(Symbols.BLOCK_MIDDLE, "#E62600");
     private final static Style GRASS = new Style(Symbols.BLOCK_DENSE, "#00CC00");
 
-    private Thread backgroundSound;
-    private Audio audio;
+    private Audio backgroundSound;
 
     public Level1() {
         super("Undead City", new Point(200, 5));
@@ -20,9 +19,8 @@ public class Level1 extends Level {
 
     @Override
     void init() {
-        audio = new Audio();
-        backgroundSound = new Thread(() -> audio.playIndefinitely("sounds/forest.wav", () -> this.isLevelCompleted()));
-        backgroundSound.start();
+        backgroundSound = new Audio("sounds/forest.wav");
+        new Thread(() -> backgroundSound.playIndefinitely(() -> this.isLevelCompleted())).start();
 
         add(new Flat2(new Point(29, -18)));
         add(new Tree1(new Point(8, -13)));
@@ -36,6 +34,9 @@ public class Level1 extends Level {
         add(platformWithEnemies1);
 
         add(new Enemy(platformWithEnemies1));
+        add(new Enemy(platformWithEnemies1));
+        add(new Enemy(platformWithEnemies1));
+        add(new Enemy(platformWithEnemies1));
 
         add(new Platform(new Point(25, 0), 1, 10, BRICK));
         for (int i = 0; i < 10; i++) {
@@ -45,7 +46,7 @@ public class Level1 extends Level {
 
     @Override
     void tearDown() {
-        audio.stop();
+        backgroundSound.stop();
     }
 
 }

@@ -1,11 +1,15 @@
 package com.freedom.model;
 
 import com.freedom.display.Pencil;
+import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
+import java.util.Random;
+
 public class Enemy extends Drawable implements Collidible, DamageInflicting {
 
+    private final int speed;
     long globalFrame = 0;
     long localFrame = 0;
     Direction direction;
@@ -14,16 +18,33 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
     private Collidible assignedArea;
     private int life = 100;
     private boolean isDead = false;
+    private Audio dyingSound;
 
     public Enemy(Collidible assignedArea) {
         super(Integer.MAX_VALUE - 10);
         this.assignedArea = assignedArea;
 
         // middle of the platform
-        this.position = new Point(assignedArea.getUpperLeft().getX() + assignedArea.getWidth() / 2, assignedArea.getUpperLeft().getY() - height);
+        this.position = new Point(getRandomPosition(assignedArea), assignedArea.getUpperLeft().getY() - height);
 
-        this.direction = Direction.RIGHT;
+        this.direction = getRandomDirection();
         this.movement = Movement.MOVING;
+        this.speed = getRandomSpeed();
+
+        dyingSound = new Audio("sounds/dying.wav");
+    }
+
+    private int getRandomPosition(Collidible assignedArea) {
+        return Math.abs(new Random().nextInt()) % (assignedArea.getWidth() - 5) + assignedArea.getUpperLeft().getX();
+    }
+
+    private int getRandomSpeed() {
+        return Math.abs(new Random().nextInt()) % 2 + 3;
+    }
+
+    private Direction getRandomDirection() {
+        boolean goingRight = new Random().nextBoolean();
+        return goingRight ? Direction.RIGHT : Direction.LEFT;
     }
 
     @Override
@@ -42,7 +63,7 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
                     drawStandingRight(pencil);
                 }
             } else {
-                if (globalFrame % 4 == 0) {
+                if (globalFrame % speed == 0) {
                     int numberOfFrames = 3;
                     localFrame = (localFrame % numberOfFrames) + 1;
                 }
@@ -146,7 +167,7 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
 
     public void move() {
         int steps = 1;
-        if (!isDead && globalFrame % 4 == 0) {
+        if (!isDead && globalFrame % speed == 0) {
 
             if (direction == Direction.LEFT) {
                 int spaceToTheLeft = position.getX() - assignedArea.getUpperLeft().getX() - 1;
@@ -193,6 +214,8 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
         if (life <= 0) {
             isDead = true;
             movement = Movement.NONE;
+
+            new Thread(() -> dyingSound.playOnce()).start();
         }
     }
 

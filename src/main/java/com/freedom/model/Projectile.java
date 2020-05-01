@@ -6,16 +6,19 @@ import com.googlecode.lanterna.TextColor;
 
 public class Projectile extends Drawable implements Collidible, DamageInflicting {
 
+    public static final int MAX_RANGE = 20;
     long globalFrame = 0;
     long localFrame = 0;
     Direction direction;
     Movement movement;
     final int height = 1;
     private boolean isActive;
+    private Point initialPosition;
 
     public Projectile(Point initialPosition, Direction direction) {
         super(Integer.MAX_VALUE - 10);
 
+        this.initialPosition = initialPosition;
         this.position = initialPosition;
 
         this.direction = direction;
@@ -64,6 +67,12 @@ public class Projectile extends Drawable implements Collidible, DamageInflicting
     }
 
     public void move(Collidible nearestCollidibleToLeft, Collidible nearestCollidibleToRight) {
+
+        if (getTravelledDistance() > MAX_RANGE) {
+            isActive = false;
+            return;
+        }
+
         int steps = 1;
         if (globalFrame % 1 == 0) {
 
@@ -120,5 +129,9 @@ public class Projectile extends Drawable implements Collidible, DamageInflicting
 
     public boolean isActive() {
         return isActive;
+    }
+
+    private int getTravelledDistance() {
+        return Math.abs(initialPosition.getX() - position.getX());
     }
 }

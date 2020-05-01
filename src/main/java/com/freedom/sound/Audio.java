@@ -11,11 +11,16 @@ import java.util.concurrent.Callable;
 public class Audio {
 
     private SourceDataLine sourceLine;
+    private String filename;
 
-    public void playIndefinitely(String filename, Callable<Boolean> stopCondition) {
+    public Audio(String file) {
+        this.filename = file;
+    }
+
+    public void playIndefinitely(Callable<Boolean> stopCondition) {
         try {
             while (!stopCondition.call()) {
-                playOnce(filename);
+                playOnce();
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -28,7 +33,7 @@ public class Audio {
         }
     }
 
-    private void playOnce(String filename) {
+    public void playOnce() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
             File file = new File(classLoader.getResource(filename).getFile());
