@@ -11,9 +11,11 @@ public class Player extends Drawable implements Collidible, Graviteable {
     Direction direction;
     Movement movement;
     final int height = 3;
+    private DrawableRegister drawableRegister;
 
-    public Player(Point initialPosition) {
+    public Player(Point initialPosition, DrawableRegister drawableRegister) {
         super(Integer.MAX_VALUE);
+        this.drawableRegister = drawableRegister;
         this.position = initialPosition;
 
         this.direction = Direction.RIGHT;
@@ -210,5 +212,9 @@ public class Player extends Drawable implements Collidible, Graviteable {
         for (int i = 0; i < jumpHeight; i++) {
             position = position.up();
         }
+    }
+
+    public void shoot() {
+        drawableRegister.add(new Projectile(getPosition().down(), direction));
     }
 }

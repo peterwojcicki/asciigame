@@ -8,13 +8,15 @@ import com.googlecode.lanterna.input.KeyType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public abstract class Level {
+public abstract class Level implements DrawableRegister {
 
     private List<Drawable> drawables;
     private List<Collidible> collidibles;
     private List<Graviteable> graviteables;
     private List<Enemy> enemies;
+    private List<Projectile> projectiles;
 
     private Point finish;
     private final Player player;
@@ -26,8 +28,9 @@ public abstract class Level {
         collidibles = new ArrayList<>();
         graviteables = new ArrayList<>();
         enemies = new ArrayList<>();
+        projectiles = new ArrayList<>();
 
-        player = new Player(new Point(0, -4));
+        player = new Player(new Point(0, -4), this);
         pencil = new Pencil(player);
 
         add(player);
@@ -51,6 +54,11 @@ public abstract class Level {
                 if (keyStroke.getKeyType().equals(KeyType.ArrowUp)) {
                     player.jump(getNearestCollidibleAbove(player));
                 }
+                if (keyStroke.getKeyType().equals(KeyType.Character)) {
+                    if (keyStroke.getCharacter().equals(' ')) {
+                        player.shoot();
+                    }
+                }
             }
         }
 
@@ -69,6 +77,7 @@ public abstract class Level {
 
     abstract void init();
 
+    @Override
     public void add(Drawable drawable) {
         drawables.add(drawable);
 
@@ -84,6 +93,10 @@ public abstract class Level {
 
         if (drawable instanceof Enemy) {
             enemies.add((Enemy) drawable);
+        }
+
+        if (drawable instanceof Projectile) {
+            projectiles.add((Projectile) drawable);
         }
     }
 
@@ -101,12 +114,28 @@ public abstract class Level {
             }
         }
 
+        removeInactiveProjectiles();
+
         for (Enemy enemy : enemies) {
             enemy.move();
         }
 
+        for (Projectile projectile : projectiles.stream().filter(p -> p.isActive()).collect(Collectors.toList())) {
+            projectile.move(getNearestCollidibleLeft(projectile), getNearestCollidibleRight(projectile));
+        }
+
         draw(pencil);
         pencil.flush();
+    }
+
+    private void removeInactiveProjectiles() {
+        projectiles.removeIf(p -> !p.isActive());
+        collidibles.removeIf(p -> p instanceof Projectile && !((Projectile) p).isActive());
+
+        // we don't want to be blocked by dead enemies
+        collidibles.removeIf(p -> p instanceof Enemy && ((Enemy) p).isDead());
+
+        drawables.removeIf(p -> p instanceof Projectile && !((Projectile) p).isActive());
     }
 
     private void draw(Pencil pencil) {
@@ -119,19 +148,19 @@ public abstract class Level {
         });
     }
 
-    private Collidible getNearestCollidibleAbove(Graviteable graviteable) {
+    private Collidible getNearestCollidibleAbove(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
         for (Collidible collidible : collidibles) {
 
-            if (collidible.getUpperLeft().getX() > graviteable.getPosition().getX()
-                    || collidible.getLowerRight().getX() < graviteable.getPosition().getX()) {
+            if (collidible.getUpperLeft().getX() > movingObject.getPosition().getX()
+                    || collidible.getLowerRight().getX() < movingObject.getPosition().getX()) {
                 continue;
             }
 
-            if (collidible.isTouchingVerticallyFromAbove(graviteable)) {
+            if (collidible.isTouchingVerticallyFromAbove(movingObject)) {
                 return collidible;
-            } else if (collidible.getLowerRight().isHigherThan(graviteable.getUpperLeft())) {
+            } else if (collidible.getLowerRight().isHigherThan(movingObject.getUpperLeft())) {
                 if (nearestCollidible == null || nearestCollidible.getLowerRight().isHigherThan(collidible.getLowerRight())) {
                     nearestCollidible = collidible;
                 }
@@ -141,19 +170,19 @@ public abstract class Level {
         return nearestCollidible;
     }
 
-    private Collidible getNearestCollidibleBelow(Graviteable graviteable) {
+    private Collidible getNearestCollidibleBelow(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
         for (Collidible collidible : collidibles) {
 
-            if (collidible.getUpperLeft().getX() > graviteable.getPosition().getX()
-                    || collidible.getLowerRight().getX() < graviteable.getPosition().getX()) {
+            if (collidible.getUpperLeft().getX() > movingObject.getPosition().getX()
+                    || collidible.getLowerRight().getX() < movingObject.getPosition().getX()) {
                 continue;
             }
 
-            if (collidible.isTouchingVerticallyFromBelow(graviteable)) {
+            if (collidible.isTouchingVerticallyFromBelow(movingObject)) {
                 return collidible;
-            } else if (collidible.getUpperLeft().isLowerThan(graviteable.getLowerRight())) {
+            } else if (collidible.getUpperLeft().isLowerThan(movingObject.getLowerRight())) {
                 if (nearestCollidible == null || nearestCollidible.getUpperLeft().isLowerThan(collidible.getUpperLeft())) {
                     nearestCollidible = collidible;
                 }
@@ -163,19 +192,19 @@ public abstract class Level {
         return nearestCollidible;
     }
 
-    private Collidible getNearestCollidibleLeft(Graviteable graviteable) {
+    private Collidible getNearestCollidibleLeft(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
         for (Collidible collidible : collidibles) {
 
-            if (collidible.getUpperLeft().getY() > graviteable.getPosition().getY()
-                    || collidible.getLowerRight().getY() < graviteable.getPosition().getY()) {
+            if (collidible.getUpperLeft().getY() > movingObject.getPosition().getY()
+                    || collidible.getLowerRight().getY() < movingObject.getPosition().getY()) {
                 continue;
             }
 
-            if (collidible.isTouchingHorizontallyFromLeft(graviteable)) {
+            if (collidible.isTouchingHorizontallyFromLeft(movingObject)) {
                 return collidible;
-            } else if (collidible.getLowerRight().isLeftOf(graviteable.getUpperLeft())) {
+            } else if (collidible.getLowerRight().isLeftOf(movingObject.getUpperLeft())) {
                 if (nearestCollidible == null || nearestCollidible.getLowerRight().isLeftOf(collidible.getLowerRight())) {
                     nearestCollidible = collidible;
                 }
@@ -185,19 +214,19 @@ public abstract class Level {
         return nearestCollidible;
     }
 
-    private Collidible getNearestCollidibleRight(Graviteable graviteable) {
+    private Collidible getNearestCollidibleRight(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
         for (Collidible collidible : collidibles) {
 
-            if (collidible.getUpperLeft().getY() > graviteable.getPosition().getY()
-                    || collidible.getLowerRight().getY() < graviteable.getPosition().getY()) {
+            if (collidible.getUpperLeft().getY() > movingObject.getPosition().getY()
+                    || collidible.getLowerRight().getY() < movingObject.getPosition().getY()) {
                 continue;
             }
 
-            if (collidible.isTouchingHorizontallyFromRight(graviteable)) {
+            if (collidible.isTouchingHorizontallyFromRight(movingObject)) {
                 return collidible;
-            } else if (collidible.getUpperLeft().isRightOf(graviteable.getLowerRight())) {
+            } else if (collidible.getUpperLeft().isRightOf(movingObject.getLowerRight())) {
                 if (nearestCollidible == null || nearestCollidible.getUpperLeft().isRightOf(collidible.getUpperLeft())) {
                     nearestCollidible = collidible;
                 }

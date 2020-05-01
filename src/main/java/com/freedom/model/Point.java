@@ -48,4 +48,5 @@ public class Point {
     public boolean isRightOf(Point point) {
         return x > point.getX();
     }
+
 }

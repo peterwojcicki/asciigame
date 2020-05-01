@@ -6,6 +6,8 @@ public interface Collidible {
 
     Point getLowerRight();
 
+    Point getPosition();
+
     default boolean isTouchingVerticallyFromAbove(Collidible other) {
         return getLowerRight().getY() + 1 == other.getUpperLeft().getY();
     }
@@ -28,5 +30,9 @@ public interface Collidible {
 
     default int getHeight() {
         return getLowerRight().getY() - getUpperLeft().getY() + 1;
+    }
+
+    default void hitByProjectile(Projectile projectile) {
+
     }
 }

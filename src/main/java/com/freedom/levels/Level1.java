@@ -32,7 +32,7 @@ public class Level1 extends Level {
         add(new Platform(new Point(-2, 1), 20, 1, BRICK));
         add(new Platform(new Point(15, 5), 40, 1, BRICK));
 
-        Platform platformWithEnemies1 = new Platform(new Point(25, 10), 50, 1, BRICK);
+        Platform platformWithEnemies1 = new Platform(new Point(25, 15), 50, 1, BRICK);
         add(platformWithEnemies1);
 
         add(new Enemy(platformWithEnemies1));
