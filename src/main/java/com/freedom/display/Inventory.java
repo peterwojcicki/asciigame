@@ -22,6 +22,10 @@ public class Inventory extends Drawable {
             pencil.print(Symbols.HEART + " ");
         }
 
+        pencil.setForegroundColor(TextColor.ANSI.BLACK);
+        pencil.moveToAbsolute(1, 0);
+        pencil.print("(" + player.getPosition().getX() + ", " + player.getPosition().getY() + ")");
+
 
     }
 }

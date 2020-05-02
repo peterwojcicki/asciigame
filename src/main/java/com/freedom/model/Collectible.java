@@ -15,9 +15,10 @@ public class Collectible extends Drawable {
 
     public Collectible(Point initialPosition, Consumer<Collectible> onCollectEvent) {
         super(Integer.MAX_VALUE);
+
         this.onCollectEvent = onCollectEvent;
         this.position = initialPosition;
-        collectSound = new Audio("sounds/collect.wav");
+        this.collectSound = new Audio("sounds/collect.wav");
     }
 
     @Override

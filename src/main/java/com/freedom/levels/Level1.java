@@ -9,7 +9,10 @@ import com.googlecode.lanterna.Symbols;
 public class Level1 extends Level {
 
     private final static Style BRICK = new Style(Symbols.BLOCK_MIDDLE, "#E62600");
-    private final static Style GRASS = new Style(Symbols.BLOCK_DENSE, "#00CC00");
+    private final static Style GRASS = new Style(Symbols.BLOCK_MIDDLE, "#338d30");
+    private final static Style PAVEMENT = new Style(Symbols.BLOCK_DENSE, "#cccccc");
+    private final static Style EARTH = new Style(Symbols.BLOCK_DENSE, "#d2c37b");
+    private final static Style WATER = new Style(Symbols.BLOCK_DENSE, "#5675dc");
 
     private Audio backgroundSound;
 
@@ -22,31 +25,34 @@ public class Level1 extends Level {
         backgroundSound = new Audio("sounds/forest.wav");
         new Thread(() -> backgroundSound.playIndefinitely(() -> this.isLevelCompleted())).start();
 
-        add(new Flat2(new Point(29, -18)));
-        add(new Tree1(new Point(8, -13)));
-        add(new Sky());
-//        add(new Grass());
-        add(new Platform(new Point(-2, -6), 10, 1, GRASS));
-        add(new Platform(new Point(-2, 1), 20, 1, BRICK));
-        add(new Platform(new Point(15, 5), 40, 1, BRICK));
-
-        Platform platformWithEnemies1 = new Platform(new Point(25, 15), 50, 1, BRICK);
-        add(platformWithEnemies1);
-
-        add(new Enemy(platformWithEnemies1));
-        add(new Enemy(platformWithEnemies1));
-        add(new Enemy(platformWithEnemies1));
-        add(new Enemy(platformWithEnemies1));
-
-        add(new Platform(new Point(25, 0), 1, 10, BRICK));
-
-
-        add(new Collectible(new Point(50, 13), (Void) -> player.increaseHealth()));
-
-
         for (int i = 0; i < 10; i++) {
             add(new Clouds(new Point(-100 + 80 * i, -20 + 2 * (i % 2))));
         }
+        add(new Sky());
+
+        // before the bridge
+        add(new Platform(new Point(-50, 3), 100, 1, GRASS));
+        add(new Filler(new Point(-50, 4), 100, 50, EARTH));
+        add(new TreeWithoutLeaves(new Point(-30, -9)));
+        add(new TreeWithoutLeaves(new Point(0, -9)));
+        add(new Collectible(new Point(15, 1), (Void) -> player.increaseHealth()));
+
+        // bridge
+        add(new Bridge(new Point(50, -6)));
+        add(new Platform(new Point(50, 3), 68, 1, PAVEMENT));
+
+
+        // water under the bridge
+        add(new Filler(new Point(50, 8), 68, 100, WATER));
+
+        // after the bridge
+        Platform platformAfterBridge = new Platform(new Point(118, 3), 100, 1, GRASS);
+        add(platformAfterBridge);
+        add(new Filler(new Point(118, 4), 100, 50, EARTH));
+        add(new Enemy(platformAfterBridge));
+        add(new Enemy(platformAfterBridge));
+        add(new TreeWithoutLeaves(new Point(130, -9)));
+
     }
 
     @Override
