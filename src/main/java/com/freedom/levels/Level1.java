@@ -17,7 +17,8 @@ public class Level1 extends Level {
     private Audio backgroundSound;
 
     public Level1() {
-        super("Undead City", new Point(200, 5));
+        // TODO move the finish point
+        super("Undead City", new Point(1000, 5));
     }
 
     @Override
@@ -31,11 +32,13 @@ public class Level1 extends Level {
         add(new Sky());
 
         // before the bridge
-        add(new Platform(new Point(-50, 3), 100, 1, GRASS));
-        add(new Filler(new Point(-50, 4), 100, 50, EARTH));
+        add(new Platform(new Point(-200, 3), 250, 1, GRASS));
+        // the wall to jump over
+        add(new Platform(new Point(25, 2), 8, 1, BRICK));
+
+        add(new Filler(new Point(-200, 4), 250, 50, EARTH));
         add(new TreeWithoutLeaves(new Point(-30, -9)));
         add(new TreeWithoutLeaves(new Point(0, -9)));
-        add(new Collectible(new Point(15, 1), (Void) -> player.increaseHealth()));
 
         // bridge
         add(new Bridge(new Point(50, -6)));
@@ -51,7 +54,20 @@ public class Level1 extends Level {
         add(new Filler(new Point(118, 4), 100, 50, EARTH));
         add(new Enemy(platformAfterBridge));
         add(new Enemy(platformAfterBridge));
+        add(new Enemy(platformAfterBridge));
+        add(new Enemy(platformAfterBridge));
         add(new TreeWithoutLeaves(new Point(130, -9)));
+
+        // the wall to jump over
+        add(new Platform(new Point(150, 2), 8, 1, BRICK));
+        add(new Collectible(new Point(154, 0), (Void) -> player.increaseHealth()));
+
+        add(new Flat1(new Point(160, -6)));
+        add(new Flat2(new Point(185, -18)));
+        add(new Platform(new Point(181, 1), 4, 2, BRICK ));
+        add(new Platform(new Point(175, -3), 4, 1, BRICK ));
+        add(new Platform(new Point(181, -8), 4, 1, BRICK ));
+        add(new Collectible(new Point(183, -10), (Void) -> player.increaseHealth()));
 
     }
 

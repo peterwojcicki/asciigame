@@ -50,7 +50,7 @@ public class Collectible extends Drawable {
     }
 
     public boolean isWithinReach(Collidible collidible) {
-        return Math.abs(collidible.getPosition().getX() - getPosition().getX()) < 3
-                && Math.abs(collidible.getPosition().getY() - getPosition().getY()) < 3;
+        return Math.abs(collidible.getPosition().getX() - getPosition().getX()) < 2
+                && Math.abs(collidible.getPosition().getY() - getPosition().getY()) < 2;
     }
 }

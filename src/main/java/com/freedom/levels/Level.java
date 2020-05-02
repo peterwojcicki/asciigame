@@ -55,7 +55,9 @@ public abstract class Level implements DrawableRegister {
             KeyStroke keyStroke = pencil.pollInput();
             if (keyStroke != null) {
                 if (keyStroke.getKeyType().equals(KeyType.ArrowLeft)) {
-                    player.moveLeft(getNearestCollidibleLeft(player));
+                    if (player.getPosition().getX() > 0) {
+                        player.moveLeft(getNearestCollidibleLeft(player));
+                    }
                 }
                 if (keyStroke.getKeyType().equals(KeyType.ArrowRight)) {
                     player.moveRight(getNearestCollidibleRight(player));
@@ -216,9 +218,14 @@ public abstract class Level implements DrawableRegister {
     private Collidible getNearestCollidibleLeft(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
+        int offset = 0;
+        if (movingObject instanceof Player) {
+            offset = 2;
+        }
+
         for (Collidible collidible : collidibles) {
 
-            if (collidible.getUpperLeft().getY() > movingObject.getPosition().getY()
+            if (collidible.getUpperLeft().getY() > movingObject.getPosition().getY() + offset
                     || collidible.getLowerRight().getY() < movingObject.getPosition().getY()) {
                 continue;
             }
@@ -238,9 +245,14 @@ public abstract class Level implements DrawableRegister {
     private Collidible getNearestCollidibleRight(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
+        int offset = 0;
+        if (movingObject instanceof Player) {
+            offset = 2;
+        }
+
         for (Collidible collidible : collidibles) {
 
-            if (collidible.getUpperLeft().getY() > movingObject.getPosition().getY()
+            if (collidible.getUpperLeft().getY() > movingObject.getPosition().getY() + offset
                     || collidible.getLowerRight().getY() < movingObject.getPosition().getY()) {
                 continue;
             }
