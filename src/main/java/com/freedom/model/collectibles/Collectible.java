@@ -1,4 +1,4 @@
-package com.freedom.model;
+package com.freedom.model.collectibles;
 
 import com.freedom.display.Pencil;
 import com.freedom.model.common.Collidible;
@@ -10,7 +10,7 @@ import com.googlecode.lanterna.TextColor;
 
 import java.util.function.Consumer;
 
-public class Collectible extends Drawable {
+public abstract class Collectible extends Drawable {
 
     private boolean isCollected = false;
     private Consumer<Collectible> onCollectEvent;
@@ -32,8 +32,10 @@ public class Collectible extends Drawable {
         pencil.setForegroundColor(TextColor.ANSI.RED);
         pencil.moveTo(x, y);
 
-        pencil.print(Symbols.HEART);
+        pencil.print(getSymbol());
     }
+
+    protected abstract String getSymbol();
 
     public Point getPosition() {
         return position;

@@ -4,6 +4,9 @@ import com.freedom.display.Sky;
 import com.freedom.display.Style;
 import com.freedom.model.*;
 import com.freedom.model.backgrounditems.*;
+import com.freedom.model.collectibles.Ammo;
+import com.freedom.model.collectibles.Collectible;
+import com.freedom.model.collectibles.Life;
 import com.freedom.model.common.Point;
 import com.freedom.model.enemies.Zombie;
 import com.freedom.sound.Audio;
@@ -68,17 +71,19 @@ public class Level1 extends Level {
 //        add(new Spider(platformBeforeBridge));
 //        add(new Spider(platformBeforeBridge));
 //        add(new Soldier(platformBeforeBridge));
+
         // the wall to jump over
-        add(new Platform(new Point(25, 2), 8, 1, BRICK));
+        add(new Platform(new Point(25, 1), 8, 2, BRICK));
 
         add(new Filler(new Point(-200, 4), 250, 50, EARTH));
         add(new TreeWithoutLeaves(new Point(-30, -9)));
         add(new TreeWithoutLeaves(new Point(0, -9)));
 
+        add(new Ammo(new Point(45, 1), player));
+
         // bridge
         add(new Bridge(new Point(50, -6)));
         add(new Platform(new Point(50, 3), 68, 1, PAVEMENT));
-
 
         // water under the bridge
         add(new Filler(new Point(50, 8), 68, 100, WATER));
@@ -93,16 +98,18 @@ public class Level1 extends Level {
         add(new Zombie(platformAfterBridge));
         add(new TreeWithoutLeaves(new Point(130, -9)));
 
+        add(new Ammo(new Point(137, 1), player));
+
         // the wall to jump over
-        add(new Platform(new Point(150, 2), 8, 1, BRICK));
-        add(new Collectible(new Point(154, 0), (Void) -> player.increaseHealth()));
+        add(new Platform(new Point(150, 1), 8, 2, BRICK));
+        add(new Life(new Point(154, 0), player));
 
         add(new Flat1(new Point(160, -6)));
         add(new Flat2(new Point(185, -18)));
         add(new Platform(new Point(181, 1), 4, 2, BRICK ));
         add(new Platform(new Point(175, -3), 4, 1, BRICK ));
         add(new Platform(new Point(181, -8), 4, 1, BRICK ));
-        add(new Collectible(new Point(183, -10), (Void) -> player.increaseHealth()));
+        add(new Life(new Point(183, -10),  player));
 
     }
 

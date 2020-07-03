@@ -3,6 +3,7 @@ package com.freedom.levels;
 import com.freedom.display.Inventory;
 import com.freedom.display.Pencil;
 import com.freedom.model.*;
+import com.freedom.model.collectibles.Collectible;
 import com.freedom.model.common.*;
 import com.freedom.model.enemies.Enemy;
 import com.freedom.model.weapons.Projectile;

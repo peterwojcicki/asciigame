@@ -25,4 +25,8 @@ public abstract class Weapon {
     }
 
     public abstract String getSymbol();
+
+    public void increaseAmmo() {
+        ammo += 20;
+    }
 }

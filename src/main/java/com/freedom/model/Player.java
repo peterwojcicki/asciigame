@@ -269,4 +269,8 @@ public class Player extends Drawable implements Collidible, Graviteable {
     public Weapon getCurrentWeapon() {
         return currentWeapon;
     }
+
+    public void increaseAmmo() {
+        currentWeapon.increaseAmmo();
+    }
 }
