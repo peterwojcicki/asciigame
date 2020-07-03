@@ -10,7 +10,7 @@ public abstract class Projectile extends Drawable implements Collidible, DamageI
     long globalFrame = 0;
     long localFrame = 0;
     Direction direction;
-    Movement movement;
+    Action action;
     final int height = 1;
     private boolean isActive;
     private Point initialPosition;
@@ -23,7 +23,7 @@ public abstract class Projectile extends Drawable implements Collidible, DamageI
         this.position = initialPosition;
 
         this.direction = direction;
-        this.movement = Movement.MOVING;
+        this.action = Action.MOVING;
         this.isActive = true;
         this.causesExplosion = causesExplosion;
     }
@@ -83,6 +83,7 @@ public abstract class Projectile extends Drawable implements Collidible, DamageI
                     int spaceToTheLeft = position.getX() - nearestCollidibleToLeft.getLowerRight().getX() - 1;
                     if (spaceToTheLeft <= steps) {
                         nearestCollidibleToLeft.hitByProjectile(this);
+                        playSoundOnHit();
                         isActive = false;
                     } else {
                         for (int i = 0; i < steps; i++) {
@@ -99,6 +100,7 @@ public abstract class Projectile extends Drawable implements Collidible, DamageI
                     int spaceToTheRight = nearestCollidibleToRight.getUpperLeft().getX() - position.getX() - 1;
                     if (spaceToTheRight <= steps) {
                         nearestCollidibleToRight.hitByProjectile(this);
+                        playSoundOnHit();
                         isActive = false;
                     } else {
                         for (int i = 0; i < steps; i++) {
@@ -140,4 +142,6 @@ public abstract class Projectile extends Drawable implements Collidible, DamageI
     public boolean isCausesExplosion() {
         return causesExplosion;
     }
+
+    protected void playSoundOnHit() {}
 }

@@ -1,5 +1,5 @@
 package com.freedom.model;
 
-public enum Movement {
+public enum Action {
     NONE, MOVING, EXPLODING;
 }

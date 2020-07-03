@@ -10,7 +10,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     long globalFrame = 0;
     long localFrame = 0;
     Direction direction;
-    Movement movement;
+    Action action;
     final int height = 3;
     private DrawableRegister drawableRegister;
 
@@ -24,7 +24,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
         this.position = initialPosition;
 
         this.direction = Direction.RIGHT;
-        this.movement = Movement.NONE;
+        this.action = Action.NONE;
 
         arrowSound = new Audio("sounds/arrow.wav");
     }
@@ -33,7 +33,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     public void draw(Pencil pencil) {
         globalFrame++;
 
-        if (movement == Movement.NONE) {
+        if (action == Action.NONE) {
             if (direction == Direction.LEFT) {
                 drawStandingLeft(pencil);
             }
@@ -52,7 +52,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
                     drawStandingLeft(pencil);
                 } else if (localFrame > 2) {
                     localFrame = 0;
-                    movement = Movement.NONE;
+                    action = Action.NONE;
                     drawStandingLeft(pencil);
                 }
             }
@@ -63,7 +63,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
                     drawStandingRight(pencil);
                 } else if (localFrame > 2) {
                     localFrame = 0;
-                    movement = Movement.NONE;
+                    action = Action.NONE;
                     drawStandingRight(pencil);
                 }
             }
@@ -151,9 +151,9 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void moveLeft(Collidible nearestCollidibleLeft) {
-        if (movement == Movement.NONE) {
+        if (action == Action.NONE) {
             direction = Direction.LEFT;
-            movement = Movement.MOVING;
+            action = Action.MOVING;
 
             int steps = 2;
             if (nearestCollidibleLeft != null) {
@@ -169,9 +169,9 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void moveRight(Collidible nearestCollidibleRight) {
-        if (movement == Movement.NONE) {
+        if (action == Action.NONE) {
             direction = Direction.RIGHT;
-            movement = Movement.MOVING;
+            action = Action.MOVING;
 
             int steps = 2;
             if (nearestCollidibleRight != null) {

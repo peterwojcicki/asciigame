@@ -2,8 +2,6 @@ package com.freedom.model;
 
 import com.freedom.display.Pencil;
 import com.freedom.sound.Audio;
-import com.googlecode.lanterna.Symbols;
-import com.googlecode.lanterna.TextColor;
 
 import java.util.Random;
 
@@ -13,13 +11,12 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
     long globalFrame = 0;
     long localFrame = 0;
     Direction direction;
-    Movement movement;
+    Action action;
     final int height = 3;
     private Collidible assignedArea;
     private int life = 100;
     private boolean isDead = false;
     private Audio dyingSound;
-    private Audio explosionSound;
     private long inflictedInjuryAtFrame;
     protected boolean diedFromExplosion;
 
@@ -31,11 +28,10 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
         this.position = new Point(getRandomPosition(assignedArea), assignedArea.getUpperLeft().getY() - height);
 
         this.direction = getRandomDirection();
-        this.movement = Movement.MOVING;
+        this.action = Action.MOVING;
         this.speed = getRandomSpeed();
 
         dyingSound = new Audio("sounds/dying.wav");
-        explosionSound = new Audio("sounds/explosion1.wav");
     }
 
     private int getRandomPosition(Collidible assignedArea) {
@@ -59,14 +55,14 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
             drawDead(pencil);
         } else {
 
-            if (movement == Movement.NONE) {
+            if (action == Action.NONE) {
                 if (direction == Direction.LEFT) {
                     drawStandingLeft(pencil);
                 }
                 if (direction == Direction.RIGHT) {
                     drawStandingRight(pencil);
                 }
-            } else if (movement == Movement.EXPLODING) {
+            } else if (action == Action.EXPLODING) {
                 if (globalFrame % 5 == 0) {
                     int numberOfFrames = 5;
                     localFrame = (localFrame % numberOfFrames) + 1;
@@ -113,84 +109,19 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
         }
     }
 
-    private void drawExplodingFrame1(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y - 2);
-        pencil.print(Symbols.BULLET);
-        pencil.moveTo(x - 1, y - 1);
-        pencil.print("\\   /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x + 1, y);
-        pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x, y);
-        pencil.print("| |");
+    protected void drawExplodingFrame1(Pencil pencil) {
     }
 
-    private void drawExplodingFrame2(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y - 3);
-        pencil.print(Symbols.BULLET);
-        pencil.moveTo(x - 2, y - 2);
-        pencil.print("\\    /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x + 1, y - 1);
-        pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x, y - 1);
-        pencil.print("| |");
+    protected void drawExplodingFrame2(Pencil pencil) {
     }
 
-    private void drawExplodingFrame3(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y - 2);
-        pencil.print(Symbols.BULLET);
-        pencil.moveTo(x - 2, y - 1);
-        pencil.print("\\        /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x + 2, y);
-        pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x - 1, y );
-        pencil.print("|  |");
+    protected void drawExplodingFrame3(Pencil pencil) {
     }
 
-    private void drawExplodingFrame4(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y );
-        pencil.print(Symbols.BULLET);
-        pencil.moveTo(x - 3, y + 1);
-        pencil.print("\\          /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x + 2, y + 1);
-        pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x - 2, y + 1);
-        pencil.print("|    |");
+    protected void drawExplodingFrame4(Pencil pencil) {
     }
 
-    private void drawExplodingFrame5(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y );
-        pencil.print(Symbols.BULLET);
-        pencil.moveTo(x - 4, y + 2);
-        pencil.print("\\            /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x + 3, y + 2);
-        pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x - 2, y + 2);
-        pencil.print("|    |");
+    protected void drawExplodingFrame5(Pencil pencil) {
     }
 
     protected abstract void drawStandingLeft(Pencil pencil);
@@ -257,32 +188,27 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
 
     @Override
     public void hitByProjectile(Projectile projectile) {
-        if (movement == Movement.EXPLODING) {
+        if (action == Action.EXPLODING) {
             return;
         }
 
         if (projectile.isCausesExplosion()) {
-            movement = Movement.EXPLODING;
+            action = Action.EXPLODING;
             localFrame = 1;
-
-            new Thread(() -> explosionSound.playOnce()).start();
         } else {
             life = life - 34;
-
-            if (life <= 0) {
-                new Thread(() -> dyingSound.playOnce()).start();
-            }
         }
 
         if (life <= 0) {
             die();
+            new Thread(() -> dyingSound.playOnce()).start();
         }
     }
 
     private void die() {
         life = 0;
         isDead = true;
-        movement = Movement.NONE;
+        action = Action.NONE;
     }
 
     public boolean isDead() {

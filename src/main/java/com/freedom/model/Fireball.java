@@ -1,12 +1,17 @@
 package com.freedom.model;
 
 import com.freedom.display.Pencil;
+import com.freedom.sound.Audio;
 import com.googlecode.lanterna.TextColor;
 
 public class Fireball extends Projectile {
 
+    private Audio explosionSound;
+
     public Fireball(Point initialPosition, Direction direction) {
         super(initialPosition, direction, true);
+
+        explosionSound = new Audio("sounds/explosion1.wav");
     }
 
     @Override
@@ -36,6 +41,11 @@ public class Fireball extends Projectile {
         pencil.moveTo(x + 4, y);
         pencil.print('@');
 
+    }
+
+    @Override
+    protected void playSoundOnHit() {
+        new Thread(() -> explosionSound.playOnce()).start();
     }
 
 }
