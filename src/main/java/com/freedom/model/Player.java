@@ -10,6 +10,7 @@ import com.googlecode.lanterna.TextColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Player extends Drawable implements Collidible, Graviteable {
 
@@ -259,5 +260,13 @@ public class Player extends Drawable implements Collidible, Graviteable {
     public void switchWeapon() {
         currentWeaponIndex = (currentWeaponIndex + 1 ) % weapons.size();
         currentWeapon = weapons.get(currentWeaponIndex);
+    }
+
+    public List<Weapon> getWeapons() {
+        return weapons;
+    }
+
+    public Weapon getCurrentWeapon() {
+        return currentWeapon;
     }
 }

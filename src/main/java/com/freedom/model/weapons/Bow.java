@@ -21,6 +21,6 @@ public class Bow extends Weapon {
 
     @Override
     public String getSymbol() {
-        return "" + Symbols.ARROW_LEFT;
+        return "" + Symbols.ARROW_UP;
     }
 }
