@@ -69,6 +69,10 @@ public abstract class Level implements DrawableRegister {
                     if (keyStroke.getCharacter().equals(' ')) {
                         player.shoot();
                     }
+
+                    if (keyStroke.getCharacter().equals('w')) {
+                        player.switchWeapon();
+                    }
                 }
             }
         }

@@ -1,9 +1,11 @@
 package com.freedom.model;
 
 import com.freedom.display.Pencil;
-import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends Drawable implements Collidible, Graviteable {
 
@@ -16,7 +18,9 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
     private int health = 100;
 
-    private Audio arrowSound;
+    private Weapon currentWeapon;
+    private int currentWeaponIndex = 0;
+    private List<Weapon> weapons = new ArrayList<>();
 
     public Player(Point initialPosition, DrawableRegister drawableRegister) {
         super(Integer.MAX_VALUE);
@@ -26,7 +30,9 @@ public class Player extends Drawable implements Collidible, Graviteable {
         this.direction = Direction.RIGHT;
         this.action = Action.NONE;
 
-        arrowSound = new Audio("sounds/arrow.wav");
+        weapons.add(new Bow());
+        weapons.add(new FireballLauncher());
+        currentWeapon = weapons.get(currentWeaponIndex);
     }
 
     @Override
@@ -222,9 +228,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void shoot() {
-        drawableRegister.add(new Fireball(getPosition().down(), direction));
-
-        new Thread(() -> arrowSound.playOnce()).start();
+        currentWeapon.shoot(getPosition().down(), direction).ifPresent(projectile -> drawableRegister.add(projectile));
     }
 
     public int getHealth() {
@@ -246,5 +250,10 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
             health = 100;
         }
+    }
+
+    public void switchWeapon() {
+        currentWeaponIndex = (currentWeaponIndex + 1 ) % weapons.size();
+        currentWeapon = weapons.get(currentWeaponIndex);
     }
 }
