@@ -60,17 +60,28 @@ public class Zombie extends Enemy {
 
     @Override
     protected void drawDead(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
+            int x = getPosition().getX();
+            int y = getPosition().getY();
+        if (!diedFromExplosion) {
 
-        pencil.setForegroundColor(TextColor.ANSI.RED);
+            pencil.setForegroundColor(TextColor.ANSI.RED);
 
-        if (direction == Direction.RIGHT) {
-            pencil.moveTo(x, y + 2);
-            pencil.print("x-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER);
-        } else if (direction == Direction.LEFT) {
-            pencil.moveTo(x, y + 2);
-            pencil.print(Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-x");
+            if (direction == Direction.RIGHT) {
+                pencil.moveTo(x, y + 2);
+                pencil.print("x-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER);
+            } else if (direction == Direction.LEFT) {
+                pencil.moveTo(x, y + 2);
+                pencil.print(Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-x");
+            }
+        } else {
+            pencil.moveTo(x - 4, y + 2);
+            pencil.print(Symbols.BULLET);
+            pencil.moveTo(x - 4, y + 2);
+            pencil.print("\\            /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
+            pencil.moveTo(x + 3, y + 2);
+            pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
+            pencil.moveTo(x - 2, y + 2);
+            pencil.print("|    |");
         }
     }
 

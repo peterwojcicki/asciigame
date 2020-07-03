@@ -34,15 +34,37 @@ public class Level1 extends Level {
         // before the bridge
         Platform platformBeforeBridge = new Platform(new Point(-200, 3), 250, 1, GRASS);
         add(platformBeforeBridge);
-        add(new Spider(platformBeforeBridge));
-        add(new Spider(platformBeforeBridge));
-        add(new Spider(platformBeforeBridge));
-        add(new Spider(platformBeforeBridge));
-        add(new Spider(platformBeforeBridge));
-        add(new Spider(platformBeforeBridge));
-        add(new Spider(platformBeforeBridge));
-        add(new Spider(platformBeforeBridge));
-        add(new Soldier(platformBeforeBridge));
+
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+        add(new Zombie(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Spider(platformBeforeBridge));
+//        add(new Soldier(platformBeforeBridge));
         // the wall to jump over
         add(new Platform(new Point(25, 2), 8, 1, BRICK));
 

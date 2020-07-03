@@ -222,7 +222,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void shoot() {
-        drawableRegister.add(new Projectile(getPosition().down(), direction));
+        drawableRegister.add(new Fireball(getPosition().down(), direction));
 
         new Thread(() -> arrowSound.playOnce()).start();
     }

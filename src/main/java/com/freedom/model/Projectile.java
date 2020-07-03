@@ -4,7 +4,7 @@ import com.freedom.display.Pencil;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
-public class Projectile extends Drawable implements Collidible, DamageInflicting {
+public abstract class Projectile extends Drawable implements Collidible, DamageInflicting {
 
     public static final int MAX_RANGE = 50;
     long globalFrame = 0;
@@ -14,8 +14,9 @@ public class Projectile extends Drawable implements Collidible, DamageInflicting
     final int height = 1;
     private boolean isActive;
     private Point initialPosition;
+    private boolean causesExplosion;
 
-    public Projectile(Point initialPosition, Direction direction) {
+    public Projectile(Point initialPosition, Direction direction, boolean causesExplosion) {
         super(Integer.MAX_VALUE - 10);
 
         this.initialPosition = initialPosition;
@@ -24,6 +25,7 @@ public class Projectile extends Drawable implements Collidible, DamageInflicting
         this.direction = direction;
         this.movement = Movement.MOVING;
         this.isActive = true;
+        this.causesExplosion = causesExplosion;
     }
 
     @Override
@@ -46,7 +48,7 @@ public class Projectile extends Drawable implements Collidible, DamageInflicting
         }
     }
 
-    private void drawMovingLeft(Pencil pencil) {
+    protected void drawMovingLeft(Pencil pencil) {
         int x = getPosition().getX();
         int y = getPosition().getY();
 
@@ -56,7 +58,7 @@ public class Projectile extends Drawable implements Collidible, DamageInflicting
         pencil.print(Symbols.ARROW_LEFT);
     }
 
-    private void drawMovingRight(Pencil pencil) {
+    protected void drawMovingRight(Pencil pencil) {
         int x = getPosition().getX();
         int y = getPosition().getY();
 
@@ -133,5 +135,9 @@ public class Projectile extends Drawable implements Collidible, DamageInflicting
 
     private int getTravelledDistance() {
         return Math.abs(initialPosition.getX() - position.getX());
+    }
+
+    public boolean isCausesExplosion() {
+        return causesExplosion;
     }
 }
