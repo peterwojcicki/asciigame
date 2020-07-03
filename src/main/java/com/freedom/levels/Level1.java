@@ -32,7 +32,17 @@ public class Level1 extends Level {
         add(new Sky());
 
         // before the bridge
-        add(new Platform(new Point(-200, 3), 250, 1, GRASS));
+        Platform platformBeforeBridge = new Platform(new Point(-200, 3), 250, 1, GRASS);
+        add(platformBeforeBridge);
+        add(new Spider(platformBeforeBridge));
+        add(new Spider(platformBeforeBridge));
+        add(new Spider(platformBeforeBridge));
+        add(new Spider(platformBeforeBridge));
+        add(new Spider(platformBeforeBridge));
+        add(new Spider(platformBeforeBridge));
+        add(new Spider(platformBeforeBridge));
+        add(new Spider(platformBeforeBridge));
+        add(new Soldier(platformBeforeBridge));
         // the wall to jump over
         add(new Platform(new Point(25, 2), 8, 1, BRICK));
 
@@ -52,10 +62,10 @@ public class Level1 extends Level {
         Platform platformAfterBridge = new Platform(new Point(118, 3), 100, 1, GRASS);
         add(platformAfterBridge);
         add(new Filler(new Point(118, 4), 100, 50, EARTH));
-        add(new Enemy(platformAfterBridge));
-        add(new Enemy(platformAfterBridge));
-        add(new Enemy(platformAfterBridge));
-        add(new Enemy(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
         add(new TreeWithoutLeaves(new Point(130, -9)));
 
         // the wall to jump over

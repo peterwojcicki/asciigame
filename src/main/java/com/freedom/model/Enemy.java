@@ -7,7 +7,7 @@ import com.googlecode.lanterna.TextColor;
 
 import java.util.Random;
 
-public class Enemy extends Drawable implements Collidible, DamageInflicting {
+public abstract class Enemy extends Drawable implements Collidible, DamageInflicting {
 
     private final int speed;
     long globalFrame = 0;
@@ -91,80 +91,15 @@ public class Enemy extends Drawable implements Collidible, DamageInflicting {
         }
     }
 
-    private void drawStandingLeft(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
+    protected abstract void drawStandingLeft(Pencil pencil);
 
-        pencil.setForegroundColor(TextColor.ANSI.RED);
+    protected abstract void drawWalkingLeft(Pencil pencil);
 
-        pencil.moveTo(x, y);
-        pencil.print('x');
-        pencil.moveTo(x, y + 1);
-        pencil.print('J');
+    protected abstract void drawStandingRight(Pencil pencil);
 
-        pencil.moveTo(x, y + 2);
-        pencil.print('|');
-    }
+    protected abstract void drawDead(Pencil pencil);
 
-    private void drawWalkingLeft(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y);
-        pencil.print('x');
-        pencil.moveTo(x, y + 1);
-        pencil.print('J');
-
-        pencil.moveTo(x, y + 2);
-        pencil.print('A');
-    }
-
-    private void drawStandingRight(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y);
-        pencil.print('x');
-        pencil.moveTo(x, y + 1);
-        pencil.print('L');
-
-        pencil.moveTo(x, y + 2);
-        pencil.print('|');
-    }
-
-    private void drawDead(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        if (direction == Direction.RIGHT) {
-            pencil.moveTo(x, y + 2);
-            pencil.print("x-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER);
-        } else if (direction == Direction.LEFT) {
-            pencil.moveTo(x, y + 2);
-            pencil.print(Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-x");
-        }
-    }
-
-    private void drawWalkingRight(Pencil pencil) {
-        int x = getPosition().getX();
-        int y = getPosition().getY();
-
-        pencil.setForegroundColor(TextColor.ANSI.RED);
-
-        pencil.moveTo(x, y);
-        pencil.print('x');
-        pencil.moveTo(x, y + 1);
-        pencil.print('L');
-
-        pencil.moveTo(x, y + 2);
-        pencil.print('A');
-    }
+    protected abstract void drawWalkingRight(Pencil pencil);
 
     public void move(Player player) {
         int steps = 1;
