@@ -1,6 +1,9 @@
 package com.freedom.model;
 
 import com.freedom.display.Pencil;
+import com.freedom.model.common.Collidible;
+import com.freedom.model.common.Drawable;
+import com.freedom.model.common.Point;
 import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;

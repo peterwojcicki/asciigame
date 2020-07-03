@@ -1,7 +1,7 @@
 package com.freedom.model;
 
 import com.freedom.display.Pencil;
-import com.freedom.model.Drawable;
+import com.freedom.model.common.Drawable;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 

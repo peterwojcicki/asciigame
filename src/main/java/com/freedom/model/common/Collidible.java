@@ -1,4 +1,6 @@
-package com.freedom.model;
+package com.freedom.model.common;
+
+import com.freedom.model.weapons.Projectile;
 
 public interface Collidible {
 

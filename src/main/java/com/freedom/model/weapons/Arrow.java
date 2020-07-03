@@ -1,6 +1,8 @@
-package com.freedom.model;
+package com.freedom.model.weapons;
 
 import com.freedom.display.Pencil;
+import com.freedom.model.common.Direction;
+import com.freedom.model.common.Point;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 

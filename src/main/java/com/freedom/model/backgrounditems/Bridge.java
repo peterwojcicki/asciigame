@@ -1,6 +1,8 @@
-package com.freedom.model;
+package com.freedom.model.backgrounditems;
 
 import com.freedom.display.Pencil;
+import com.freedom.model.common.Drawable;
+import com.freedom.model.common.Point;
 import com.googlecode.lanterna.TextColor;
 
 public class Bridge extends Drawable {

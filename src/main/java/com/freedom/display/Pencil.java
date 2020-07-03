@@ -1,7 +1,7 @@
 package com.freedom.display;
 
 import com.freedom.model.Player;
-import com.freedom.model.Point;
+import com.freedom.model.common.Point;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;

@@ -3,6 +3,9 @@ package com.freedom.levels;
 import com.freedom.display.Sky;
 import com.freedom.display.Style;
 import com.freedom.model.*;
+import com.freedom.model.backgrounditems.*;
+import com.freedom.model.common.Point;
+import com.freedom.model.enemies.Zombie;
 import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
 

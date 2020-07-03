@@ -1,4 +1,4 @@
-package com.freedom.model;
+package com.freedom.model.common;
 
 public enum Action {
     NONE, MOVING, EXPLODING;

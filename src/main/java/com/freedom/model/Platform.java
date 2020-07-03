@@ -1,6 +1,8 @@
 package com.freedom.model;
 
 import com.freedom.display.Style;
+import com.freedom.model.common.Collidible;
+import com.freedom.model.common.Point;
 
 public class Platform extends Filler implements Collidible {
 

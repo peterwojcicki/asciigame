@@ -1,6 +1,9 @@
-package com.freedom.model;
+package com.freedom.model.enemies;
 
 import com.freedom.display.Pencil;
+import com.freedom.model.*;
+import com.freedom.model.common.*;
+import com.freedom.model.weapons.Projectile;
 import com.freedom.sound.Audio;
 
 import java.util.Random;

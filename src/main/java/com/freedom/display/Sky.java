@@ -1,6 +1,6 @@
 package com.freedom.display;
 
-import com.freedom.model.Drawable;
+import com.freedom.model.common.Drawable;
 import com.googlecode.lanterna.TextColor;
 
 public class Sky extends Drawable {

@@ -1,4 +1,7 @@
-package com.freedom.model;
+package com.freedom.model.weapons;
+
+import com.freedom.model.common.Direction;
+import com.freedom.model.common.Point;
 
 public class FireballLauncher extends Weapon {
 

@@ -1,9 +1,9 @@
-package com.freedom.model;
+package com.freedom.model.common;
 
 import com.freedom.display.Pencil;
 
 public abstract class Drawable implements Comparable<Drawable> {
-    Point position;
+    protected Point position;
     int zindex;
 
     public Drawable(int zindex) {

@@ -2,6 +2,8 @@ package com.freedom.model;
 
 import com.freedom.display.Pencil;
 import com.freedom.display.Style;
+import com.freedom.model.common.Drawable;
+import com.freedom.model.common.Point;
 import com.googlecode.lanterna.TextColor;
 
 public class Filler extends Drawable {

@@ -1,6 +1,6 @@
 package com.freedom.display;
 
-import com.freedom.model.Drawable;
+import com.freedom.model.common.Drawable;
 import com.freedom.model.Player;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;

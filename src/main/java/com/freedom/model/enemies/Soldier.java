@@ -1,6 +1,8 @@
-package com.freedom.model;
+package com.freedom.model.enemies;
 
 import com.freedom.display.Pencil;
+import com.freedom.model.common.Collidible;
+import com.freedom.model.common.Direction;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 

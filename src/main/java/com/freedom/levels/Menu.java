@@ -1,6 +1,6 @@
 package com.freedom.levels;
 
-import com.freedom.model.Point;
+import com.freedom.model.common.Point;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;

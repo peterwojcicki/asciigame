@@ -1,6 +1,10 @@
 package com.freedom.model;
 
 import com.freedom.display.Pencil;
+import com.freedom.model.common.*;
+import com.freedom.model.weapons.Bow;
+import com.freedom.model.weapons.FireballLauncher;
+import com.freedom.model.weapons.Weapon;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
