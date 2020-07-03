@@ -23,4 +23,6 @@ public abstract class Weapon {
     public int getAmmo() {
         return ammo;
     }
+
+    public abstract String getSymbol();
 }
