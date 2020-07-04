@@ -4,6 +4,10 @@ import com.freedom.model.common.Direction;
 import com.freedom.model.common.Point;
 import com.freedom.sound.Audio;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class FireballLauncher extends Weapon {
 
     private Audio swooshSound;
@@ -13,9 +17,9 @@ public class FireballLauncher extends Weapon {
     }
 
     @Override
-    protected Projectile createNewProjectile(Point initialPosition, Direction direction) {
+    protected List<Projectile> createNewProjectiles(Point initialPosition, Direction direction) {
         new Thread(() -> swooshSound.playOnce()).start();
-        return new Fireball(initialPosition, direction);
+        return Arrays.asList(new Fireball(initialPosition, direction));
     }
 
     @Override

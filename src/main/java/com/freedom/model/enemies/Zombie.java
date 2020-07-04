@@ -62,12 +62,10 @@ public class Zombie extends Enemy {
 
     @Override
     protected void drawDead(Pencil pencil) {
-            int x = getPosition().getX();
-            int y = getPosition().getY();
+        int x = getPosition().getX();
+        int y = getPosition().getY();
         if (!diedFromExplosion) {
-
             pencil.setForegroundColor(TextColor.ANSI.RED);
-
             if (direction == Direction.RIGHT) {
                 pencil.moveTo(x, y + 2);
                 pencil.print("x-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER);
@@ -150,7 +148,7 @@ public class Zombie extends Enemy {
         pencil.print("\\        /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
         pencil.moveTo(x + 2, y);
         pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-        pencil.moveTo(x - 1, y );
+        pencil.moveTo(x - 1, y);
         pencil.print("|  |");
     }
 
@@ -161,7 +159,7 @@ public class Zombie extends Enemy {
 
         pencil.setForegroundColor(TextColor.ANSI.RED);
 
-        pencil.moveTo(x, y );
+        pencil.moveTo(x, y);
         pencil.print(Symbols.BULLET);
         pencil.moveTo(x - 3, y + 1);
         pencil.print("\\          /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
@@ -178,7 +176,7 @@ public class Zombie extends Enemy {
 
         pencil.setForegroundColor(TextColor.ANSI.RED);
 
-        pencil.moveTo(x, y );
+        pencil.moveTo(x, y);
         pencil.print(Symbols.BULLET);
         pencil.moveTo(x - 4, y + 2);
         pencil.print("\\            /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);

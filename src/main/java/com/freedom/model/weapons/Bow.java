@@ -5,6 +5,10 @@ import com.freedom.model.common.Point;
 import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Bow extends Weapon {
 
     private Audio arrowSound;
@@ -14,9 +18,9 @@ public class Bow extends Weapon {
     }
 
     @Override
-    protected Projectile createNewProjectile(Point initialPosition, Direction direction) {
+    protected List<Projectile> createNewProjectiles(Point initialPosition, Direction direction) {
         new Thread(() -> arrowSound.playOnce()).start();
-        return new Arrow(initialPosition, direction);
+        return Arrays.asList(new Arrow(initialPosition, direction));
     }
 
     @Override

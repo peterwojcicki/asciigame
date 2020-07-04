@@ -10,7 +10,6 @@ import com.googlecode.lanterna.TextColor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Player extends Drawable implements Collidible, Graviteable {
 
@@ -233,7 +232,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void shoot() {
-        currentWeapon.shoot(getPosition().down(), direction).ifPresent(projectile -> drawableRegister.add(projectile));
+        currentWeapon.shoot(getPosition().down(), direction).stream().forEach(projectile -> drawableRegister.add(projectile));
     }
 
     public int getHealth() {
@@ -258,7 +257,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void switchWeapon() {
-        currentWeaponIndex = (currentWeaponIndex + 1 ) % weapons.size();
+        currentWeaponIndex = (currentWeaponIndex + 1) % weapons.size();
         currentWeapon = weapons.get(currentWeaponIndex);
     }
 

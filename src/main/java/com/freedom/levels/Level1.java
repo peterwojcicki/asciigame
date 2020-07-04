@@ -96,13 +96,19 @@ public class Level1 extends Level {
         add(new Zombie(platformAfterBridge));
         add(new Zombie(platformAfterBridge));
         add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
+        add(new Zombie(platformAfterBridge));
         add(new TreeWithoutLeaves(new Point(130, -9)));
 
         add(new Ammo(new Point(137, 1), player));
 
         // the wall to jump over
         add(new Platform(new Point(150, 1), 8, 2, BRICK));
-        add(new Life(new Point(154, 0), player));
+        add(new Life(new Point(154, -1), player));
 
         add(new Flat1(new Point(160, -6)));
         add(new Flat2(new Point(185, -18)));
