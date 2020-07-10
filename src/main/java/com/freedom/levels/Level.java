@@ -66,6 +66,9 @@ public abstract class Level implements DrawableRegister {
                 if (keyStroke.getKeyType().equals(KeyType.ArrowRight)) {
                     player.moveRight(getNearestCollidibleRight(player));
                 }
+                if (keyStroke.getKeyType().equals(KeyType.ArrowDown)) {
+                    player.crawl();
+                }
                 if (keyStroke.getKeyType().equals(KeyType.ArrowUp)) {
                     player.jump(getNearestCollidibleAbove(player));
                 }

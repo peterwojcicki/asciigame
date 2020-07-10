@@ -157,7 +157,7 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
 
         if (weapon != null) {
             if (isFacingPlayer(player) && isCloseEnoughToPlayerToShoot(player) && !isDead && (globalFrame - weaponUsedAtFrame > 50)) {
-                weapon.shoot(position.down(), direction).stream().forEach(projectile -> drawableRegister.add(projectile));
+                weapon.shoot(position, direction).stream().forEach(projectile -> drawableRegister.add(projectile));
                 weaponUsedAtFrame = globalFrame;
             }
         }

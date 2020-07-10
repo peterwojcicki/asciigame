@@ -1,5 +1,5 @@
 package com.freedom.model.common;
 
 public enum Action {
-    NONE, MOVING, EXPLODING;
+    NONE, MOVING, EXPLODING, CRAWLING;
 }

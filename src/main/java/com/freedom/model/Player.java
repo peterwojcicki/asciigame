@@ -3,6 +3,7 @@ package com.freedom.model;
 import com.freedom.display.Pencil;
 import com.freedom.model.common.*;
 import com.freedom.model.weapons.*;
+import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
@@ -24,6 +25,8 @@ public class Player extends Drawable implements Collidible, Graviteable {
     private int currentWeaponIndex = 0;
     private List<Weapon> weapons = new ArrayList<>();
 
+    private Audio hurtSound;
+
     public Player(Point initialPosition, DrawableRegister drawableRegister) {
         super(Integer.MAX_VALUE);
         this.drawableRegister = drawableRegister;
@@ -36,6 +39,8 @@ public class Player extends Drawable implements Collidible, Graviteable {
         weapons.add(new FireballLauncher());
         weapons.add(new SonicShockwaveBlaster());
         currentWeapon = weapons.get(currentWeaponIndex);
+
+        hurtSound = new Audio("sounds/player_hurt.wav");
     }
 
     @Override
@@ -48,6 +53,13 @@ public class Player extends Drawable implements Collidible, Graviteable {
             }
             if (direction == Direction.RIGHT) {
                 drawStandingRight(pencil);
+            }
+        } else if (action == Action.CRAWLING) {
+            if (direction == Direction.LEFT) {
+                drawCrawlingLeft(pencil);
+            }
+            if (direction == Direction.RIGHT) {
+                drawCrawlingRight(pencil);
             }
         } else {
             if (globalFrame % 2 == 0) {
@@ -97,6 +109,32 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
         pencil.moveToAbsolute(x, y + 2);
         pencil.print('|');
+    }
+
+    private void drawCrawlingLeft(Pencil pencil) {
+        int x = pencil.getTerminalSize().getColumns() / 2;
+        int y = pencil.getTerminalSize().getRows() / 2;
+
+        pencil.setForegroundColor(TextColor.ANSI.RED);
+        pencil.moveToAbsolute(x, y + 1);
+        pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
+
+        pencil.setForegroundColor(TextColor.ANSI.BLACK);
+        pencil.moveToAbsolute(x, y + 2);
+        pencil.print("O" + Symbols.SINGLE_LINE_T_DOWN + Symbols.SINGLE_LINE_TOP_RIGHT_CORNER);
+    }
+
+    private void drawCrawlingRight(Pencil pencil) {
+        int x = pencil.getTerminalSize().getColumns() / 2;
+        int y = pencil.getTerminalSize().getRows() / 2;
+
+        pencil.setForegroundColor(TextColor.ANSI.RED);
+        pencil.moveToAbsolute(x + 2, y + 1);
+        pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
+
+        pencil.setForegroundColor(TextColor.ANSI.BLACK);
+        pencil.moveToAbsolute(x, y + 2);
+        pencil.print("" + Symbols.SINGLE_LINE_TOP_LEFT_CORNER + Symbols.SINGLE_LINE_T_DOWN + "O");
     }
 
     private void drawWalkingLeft(Pencil pencil) {
@@ -159,8 +197,12 @@ public class Player extends Drawable implements Collidible, Graviteable {
         pencil.print('A');
     }
 
+    public void crawl() {
+        action = Action.CRAWLING;
+    }
+
     public void moveLeft(Collidible nearestCollidibleLeft) {
-        if (action == Action.NONE) {
+        if (action != Action.MOVING) {
             direction = Direction.LEFT;
             action = Action.MOVING;
 
@@ -178,7 +220,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void moveRight(Collidible nearestCollidibleRight) {
-        if (action == Action.NONE) {
+        if (action != Action.MOVING) {
             direction = Direction.RIGHT;
             action = Action.MOVING;
 
@@ -202,7 +244,11 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
     @Override
     public Point getUpperLeft() {
-        return getPosition();
+        if (action == Action.CRAWLING) {
+            return getPosition().down().down();
+        } else {
+            return getPosition();
+        }
     }
 
     @Override
@@ -218,6 +264,8 @@ public class Player extends Drawable implements Collidible, Graviteable {
     }
 
     public void jump(Collidible nearestCollidibleAbove) {
+        action = Action.NONE;
+
         int jumpHeight = 10;
         if (nearestCollidibleAbove != null) {
             int headroom = getUpperLeft().getY() - nearestCollidibleAbove.getLowerRight().getY();
@@ -275,5 +323,6 @@ public class Player extends Drawable implements Collidible, Graviteable {
     @Override
     public void hitByProjectile(Projectile projectile) {
         injure();
+        new Thread(() -> hurtSound.playOnce()).start();
     }
 }
