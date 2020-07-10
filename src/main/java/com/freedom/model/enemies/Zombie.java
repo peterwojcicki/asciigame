@@ -3,13 +3,16 @@ package com.freedom.model.enemies;
 import com.freedom.display.Pencil;
 import com.freedom.model.common.Collidible;
 import com.freedom.model.common.Direction;
+import com.freedom.model.common.DrawableRegister;
+import com.freedom.model.weapons.Bow;
+import com.freedom.model.weapons.Pistol;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
 public class Zombie extends Enemy {
 
-    public Zombie(Collidible assignedArea) {
-        super(assignedArea);
+    public Zombie(Collidible assignedArea, DrawableRegister drawableRegister) {
+        super(assignedArea, new Pistol(), drawableRegister);
     }
 
     @Override

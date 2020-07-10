@@ -2,10 +2,7 @@ package com.freedom.model;
 
 import com.freedom.display.Pencil;
 import com.freedom.model.common.*;
-import com.freedom.model.weapons.Bow;
-import com.freedom.model.weapons.FireballLauncher;
-import com.freedom.model.weapons.SonicShockwaveBlaster;
-import com.freedom.model.weapons.Weapon;
+import com.freedom.model.weapons.*;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
@@ -37,7 +34,7 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
         weapons.add(new Bow());
         weapons.add(new FireballLauncher());
-        weapons.add(new SonicShockwaveBlaster() );
+        weapons.add(new SonicShockwaveBlaster());
         currentWeapon = weapons.get(currentWeaponIndex);
     }
 
@@ -273,5 +270,10 @@ public class Player extends Drawable implements Collidible, Graviteable {
 
     public void increaseAmmo() {
         currentWeapon.increaseAmmo();
+    }
+
+    @Override
+    public void hitByProjectile(Projectile projectile) {
+        injure();
     }
 }

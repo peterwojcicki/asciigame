@@ -1,9 +1,10 @@
 package com.freedom.model.enemies;
 
 import com.freedom.display.Pencil;
-import com.freedom.model.*;
+import com.freedom.model.Player;
 import com.freedom.model.common.*;
 import com.freedom.model.weapons.Projectile;
+import com.freedom.model.weapons.Weapon;
 import com.freedom.sound.Audio;
 
 import java.util.Random;
@@ -21,11 +22,20 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
     private boolean isDead = false;
     private Audio dyingSound;
     private long inflictedInjuryAtFrame;
+    private long weaponUsedAtFrame;
     protected boolean diedFromExplosion;
+    protected Weapon weapon;
+    private DrawableRegister drawableRegister;
 
     public Enemy(Collidible assignedArea) {
+        this(assignedArea, null, null);
+    }
+
+    public Enemy(Collidible assignedArea, Weapon weapon, DrawableRegister drawableRegister) {
         super(Integer.MAX_VALUE - 10);
         this.assignedArea = assignedArea;
+        this.weapon = weapon;
+        this.drawableRegister = drawableRegister;
 
         // middle of the platform
         this.position = new Point(getRandomPosition(assignedArea), assignedArea.getUpperLeft().getY() - height);
@@ -145,6 +155,13 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
             inflictedInjuryAtFrame = globalFrame;
         }
 
+        if (weapon != null) {
+            if (isFacingPlayer(player) && isCloseEnoughToPlayerToShoot(player) && !isDead && (globalFrame - weaponUsedAtFrame > 50)) {
+                weapon.shoot(position.down(), direction).stream().forEach(projectile -> drawableRegister.add(projectile));
+                weaponUsedAtFrame = globalFrame;
+            }
+        }
+
         if (!isDead && globalFrame % speed == 0) {
 
             if (direction == Direction.LEFT) {
@@ -169,9 +186,25 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
         }
     }
 
+
+    private boolean isFacingPlayer(Player player) {
+        if (Direction.LEFT.equals(direction) && player.getPosition().isLeftOf(position)) {
+            return true;
+        } else if (Direction.RIGHT.equals(direction) && player.getPosition().isRightOf(position)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private boolean isCloseEnoughToPlayer(Player player) {
         return Math.abs(player.getPosition().getX() - getPosition().getX()) < 2
                 && Math.abs(player.getPosition().getY() - getPosition().getY()) < 2;
+    }
+
+    private boolean isCloseEnoughToPlayerToShoot(Player player) {
+        return Math.abs(player.getPosition().getX() - getPosition().getX()) < 50
+                && Math.abs(player.getPosition().getY() - getPosition().getY()) < 50;
     }
 
     @Override
