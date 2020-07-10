@@ -44,19 +44,6 @@ public class Level1 extends Level {
         add(new Zombie(platformBeforeBridge, this));
         add(new Zombie(platformBeforeBridge, this));
         add(new Zombie(platformBeforeBridge, this));
-        add(new Zombie(platformBeforeBridge, this));
-        add(new Zombie(platformBeforeBridge, this));
-        add(new Zombie(platformBeforeBridge, this));
-        add(new Zombie(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Spider(platformBeforeBridge, this));
-//        add(new Soldier(platformBeforeBridge, this));
 
         // the wall to jump over
         add(new Platform(new Point(25, 1), 8, 2, BRICK));
@@ -78,14 +65,6 @@ public class Level1 extends Level {
         Platform platformAfterBridge = new Platform(new Point(118, 3), 100, 1, GRASS);
         add(platformAfterBridge);
         add(new Filler(new Point(118, 4), 100, 50, EARTH));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
         add(new Zombie(platformAfterBridge, this));
         add(new Zombie(platformAfterBridge, this));
         add(new TreeWithoutLeaves(new Point(130, -9)));
