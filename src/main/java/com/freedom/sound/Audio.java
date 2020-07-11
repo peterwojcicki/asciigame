@@ -35,10 +35,7 @@ public class Audio {
 
     public void playOnce() {
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource(filename).getFile());
-
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("/" + filename));
 
             int BUFFER_SIZE = 128000;
             AudioFormat audioFormat = null;
