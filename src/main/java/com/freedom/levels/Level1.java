@@ -50,7 +50,9 @@ public class Level1 extends Level {
         add(new Zombie(platformBeforeBridge, this, this));
 
         // the wall to jump over
+        add(new Life(new Point(20, 1), player));
         add(new Platform(new Point(25, 1), 8, 2, BRICK));
+        add(new Life(new Point(36, 1), player));
 
         add(new Filler(new Point(-200, 4), 250, 50, EARTH));
         add(new TreeWithoutLeaves(new Point(-30, -9)));
@@ -111,7 +113,17 @@ public class Level1 extends Level {
         add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
         add(new BlockOfFlats(new Point(secondRaisedPlatformAfterBridge.getUpperLeft().getX() + 4, secondRaisedPlatformAfterBridge.getUpperLeft().getY() - 13)));
 
-
+        // the 3nd lowered platform
+        Platform verticalPlatformBeforeLoweredPlatform = new Platform(new Point(secondRaisedPlatformAfterBridge.getLowerRight().getX(), secondRaisedPlatformAfterBridge.getLowerRight().getY()), 1, 6, PAVEMENT);
+        add(verticalPlatformBeforeLoweredPlatform);
+        Platform thirdLoweredPlatform = new Platform(new Point(secondRaisedPlatformAfterBridge.getLowerRight().getX() + 1, 5), 50, 1, PAVEMENT);
+        add(thirdLoweredPlatform);
+        add(new Filler(new Point(thirdLoweredPlatform.getPosition().getX(), thirdLoweredPlatform.getUpperLeft().getY() + 1), thirdLoweredPlatform.getWidth(), 50, EARTH));
+        add(new Zombie(thirdLoweredPlatform, this, this));
+        add(new Zombie(thirdLoweredPlatform, this, this));
+        add(new Zombie(thirdLoweredPlatform, this, this));
+        add(new Platform(new Point(thirdLoweredPlatform.getUpperLeft().getX() + 10, thirdLoweredPlatform.getUpperLeft().getY() - 2), 3, 2, BRICK));
+        add(new Life(new Point(thirdLoweredPlatform.getUpperLeft().getX() + 18, thirdLoweredPlatform.getUpperLeft().getY() - 2), player));
     }
 
     @Override

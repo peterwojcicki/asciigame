@@ -42,7 +42,7 @@ public abstract class Level implements DrawableRegister {
 
         soundManager = new SoundManager();
 
-        player = new Player(new Point(0, -4), this);
+        player = new Player(new Point(2, -4), this);
         pencil = new Pencil(player);
 
         add(player);
