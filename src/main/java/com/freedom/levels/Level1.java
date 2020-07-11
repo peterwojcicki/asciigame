@@ -8,6 +8,7 @@ import com.freedom.model.backgrounditems.*;
 import com.freedom.model.collectibles.Ammo;
 import com.freedom.model.collectibles.Life;
 import com.freedom.model.common.Point;
+import com.freedom.model.enemies.Spider;
 import com.freedom.model.enemies.Zombie;
 import com.freedom.sound.Audio;
 import com.googlecode.lanterna.Symbols;
@@ -94,9 +95,6 @@ public class Level1 extends Level {
         add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
         add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
         add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
         add(new BlockOfFlats(new Point(firstRaisedPlatformAfterBridge.getUpperLeft().getX() + 5, firstRaisedPlatformAfterBridge.getUpperLeft().getY() - 13)));
         add(new Platform(new Point(firstRaisedPlatformAfterBridge.getLowerRight().getX() - 7, firstRaisedPlatformAfterBridge.getUpperLeft().getY() - 2), 4, 2, BRICK));
         add(new Life(new Point(firstRaisedPlatformAfterBridge.getLowerRight().getX() - 1, firstRaisedPlatformAfterBridge.getUpperLeft().getY() - 2), player));
@@ -105,12 +103,7 @@ public class Level1 extends Level {
         Platform secondRaisedPlatformAfterBridge = new Platform(new Point(firstRaisedPlatformAfterBridge.getPosition().getX() + firstRaisedPlatformAfterBridge.getWidth(), 0), 50, 1, PAVEMENT);
         add(secondRaisedPlatformAfterBridge);
         add(new Filler(new Point(secondRaisedPlatformAfterBridge.getPosition().getX(), 1), secondRaisedPlatformAfterBridge.getWidth(), 50, EARTH));
-        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
-        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
+        add(new Spider(secondRaisedPlatformAfterBridge, this, this));
         add(new BlockOfFlats(new Point(secondRaisedPlatformAfterBridge.getUpperLeft().getX() + 4, secondRaisedPlatformAfterBridge.getUpperLeft().getY() - 13)));
 
         // the 3nd lowered platform

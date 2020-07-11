@@ -1,14 +1,17 @@
 package com.freedom.model.enemies;
 
 import com.freedom.display.Pencil;
+import com.freedom.levels.Level;
 import com.freedom.model.common.Collidible;
 import com.freedom.model.common.Direction;
+import com.freedom.model.common.DrawableRegister;
+import com.freedom.model.weapons.VenomLauncher;
 import com.googlecode.lanterna.TextColor;
 
 public class Spider extends Enemy {
 
-    public Spider(Collidible assignedArea) {
-        super(assignedArea);
+    public Spider(Collidible assignedArea, DrawableRegister drawableRegister, Level level) {
+        super(assignedArea, new VenomLauncher(), drawableRegister, level);
     }
 
     @Override
