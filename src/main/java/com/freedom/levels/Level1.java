@@ -41,9 +41,13 @@ public class Level1 extends Level {
         Platform platformBeforeBridge = new Platform(new Point(-200, 3), 250, 1, GRASS);
         add(platformBeforeBridge);
 
-        add(new Zombie(platformBeforeBridge, this));
-        add(new Zombie(platformBeforeBridge, this));
-        add(new Zombie(platformBeforeBridge, this));
+        add(new Zombie(platformBeforeBridge, this, this));
+        add(new Zombie(platformBeforeBridge, this, this));
+        add(new Zombie(platformBeforeBridge, this, this));
+        add(new Zombie(platformBeforeBridge, this, this));
+        add(new Zombie(platformBeforeBridge, this, this));
+        add(new Zombie(platformBeforeBridge, this, this));
+        add(new Zombie(platformBeforeBridge, this, this));
 
         // the wall to jump over
         add(new Platform(new Point(25, 1), 8, 2, BRICK));
@@ -62,11 +66,13 @@ public class Level1 extends Level {
         add(new Filler(new Point(50, 8), 68, 100, WATER));
 
         // after the bridge
-        Platform platformAfterBridge = new Platform(new Point(118, 3), 100, 1, GRASS);
+        Platform platformAfterBridge = new Platform(new Point(118, 3), 100, 1, PAVEMENT);
         add(platformAfterBridge);
         add(new Filler(new Point(118, 4), 100, 50, EARTH));
-        add(new Zombie(platformAfterBridge, this));
-        add(new Zombie(platformAfterBridge, this));
+        add(new Zombie(platformAfterBridge, this, this));
+        add(new Zombie(platformAfterBridge, this, this));
+        add(new Zombie(platformAfterBridge, this, this));
+        add(new Zombie(platformAfterBridge, this, this));
         add(new TreeWithoutLeaves(new Point(130, -9)));
 
         add(new Ammo(new Point(137, 1), player));
@@ -76,11 +82,35 @@ public class Level1 extends Level {
         add(new Life(new Point(154, -1), player));
 
         add(new Flat1(new Point(160, -6)));
-        add(new Flat2(new Point(185, -18)));
-        add(new Platform(new Point(181, 1), 4, 2, BRICK));
-        add(new Platform(new Point(175, -3), 4, 1, BRICK));
-        add(new Platform(new Point(181, -8), 4, 1, BRICK));
-        add(new Life(new Point(183, -10), player));
+        add(new Flat2(new Point(180, -18)));
+        add(new Flat2(new Point(200, -18)));
+
+        // the 1st raised platform
+        Platform firstRaisedPlatformAfterBridge = new Platform(new Point(platformAfterBridge.getPosition().getX() + platformAfterBridge.getWidth(), 1), 50, 1, PAVEMENT);
+        add(firstRaisedPlatformAfterBridge);
+        add(new Filler(new Point(firstRaisedPlatformAfterBridge.getPosition().getX(), 2), firstRaisedPlatformAfterBridge.getWidth(), 50, EARTH));
+        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(firstRaisedPlatformAfterBridge, this, this));
+        add(new BlockOfFlats(new Point(firstRaisedPlatformAfterBridge.getUpperLeft().getX() + 5, firstRaisedPlatformAfterBridge.getUpperLeft().getY() - 13)));
+        add(new Platform(new Point(firstRaisedPlatformAfterBridge.getLowerRight().getX() - 7, firstRaisedPlatformAfterBridge.getUpperLeft().getY() - 2), 4, 2, BRICK));
+        add(new Life(new Point(firstRaisedPlatformAfterBridge.getLowerRight().getX() - 1, firstRaisedPlatformAfterBridge.getUpperLeft().getY() - 2), player));
+
+        // the 2nd raised platform
+        Platform secondRaisedPlatformAfterBridge = new Platform(new Point(firstRaisedPlatformAfterBridge.getPosition().getX() + firstRaisedPlatformAfterBridge.getWidth(), 0), 50, 1, PAVEMENT);
+        add(secondRaisedPlatformAfterBridge);
+        add(new Filler(new Point(secondRaisedPlatformAfterBridge.getPosition().getX(), 1), secondRaisedPlatformAfterBridge.getWidth(), 50, EARTH));
+        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
+        add(new Zombie(secondRaisedPlatformAfterBridge, this, this));
+        add(new BlockOfFlats(new Point(secondRaisedPlatformAfterBridge.getUpperLeft().getX() + 4, secondRaisedPlatformAfterBridge.getUpperLeft().getY() - 13)));
+
 
     }
 

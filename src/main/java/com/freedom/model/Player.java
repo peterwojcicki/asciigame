@@ -292,13 +292,13 @@ public class Player extends Drawable implements Collidible, Graviteable {
         } else {
             health = 0;
         }
+        new Thread(() -> hurtSound.playOnce()).start();
     }
 
     public void increaseHealth() {
         if (health <= 90) {
             health += 10;
         } else {
-
             health = 100;
         }
     }
@@ -323,6 +323,5 @@ public class Player extends Drawable implements Collidible, Graviteable {
     @Override
     public void hitByProjectile(Projectile projectile) {
         injure();
-        new Thread(() -> hurtSound.playOnce()).start();
     }
 }

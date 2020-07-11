@@ -1,18 +1,18 @@
 package com.freedom.model.enemies;
 
 import com.freedom.display.Pencil;
+import com.freedom.levels.Level;
 import com.freedom.model.common.Collidible;
 import com.freedom.model.common.Direction;
 import com.freedom.model.common.DrawableRegister;
-import com.freedom.model.weapons.Bow;
 import com.freedom.model.weapons.Pistol;
 import com.googlecode.lanterna.Symbols;
 import com.googlecode.lanterna.TextColor;
 
 public class Zombie extends Enemy {
 
-    public Zombie(Collidible assignedArea, DrawableRegister drawableRegister) {
-        super(assignedArea, new Pistol(), drawableRegister);
+    public Zombie(Collidible assignedArea, DrawableRegister drawableRegister, Level level) {
+        super(assignedArea, new Pistol(), drawableRegister, level);
     }
 
     @Override
@@ -67,8 +67,8 @@ public class Zombie extends Enemy {
     protected void drawDead(Pencil pencil) {
         int x = getPosition().getX();
         int y = getPosition().getY();
+        pencil.setForegroundColor(TextColor.ANSI.RED);
         if (!diedFromExplosion) {
-            pencil.setForegroundColor(TextColor.ANSI.RED);
             if (direction == Direction.RIGHT) {
                 pencil.moveTo(x, y + 2);
                 pencil.print("x-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_RIGHT_CORNER);

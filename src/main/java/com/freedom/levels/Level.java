@@ -226,7 +226,7 @@ public abstract class Level implements DrawableRegister {
         return nearestCollidible;
     }
 
-    private Collidible getNearestCollidibleLeft(Collidible movingObject) {
+    public Collidible getNearestCollidibleLeft(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
         int offset = 0;
@@ -253,7 +253,7 @@ public abstract class Level implements DrawableRegister {
         return nearestCollidible;
     }
 
-    private Collidible getNearestCollidibleRight(Collidible movingObject) {
+    public Collidible getNearestCollidibleRight(Collidible movingObject) {
         Collidible nearestCollidible = null;
 
         int offset = 0;

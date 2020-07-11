@@ -1,6 +1,7 @@
 package com.freedom.model.enemies;
 
 import com.freedom.display.Pencil;
+import com.freedom.levels.Level;
 import com.freedom.model.Player;
 import com.freedom.model.common.*;
 import com.freedom.model.weapons.Projectile;
@@ -26,16 +27,18 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
     protected boolean diedFromExplosion;
     protected Weapon weapon;
     private DrawableRegister drawableRegister;
+    private Level level;
 
     public Enemy(Collidible assignedArea) {
-        this(assignedArea, null, null);
+        this(assignedArea, null, null, null);
     }
 
-    public Enemy(Collidible assignedArea, Weapon weapon, DrawableRegister drawableRegister) {
+    public Enemy(Collidible assignedArea, Weapon weapon, DrawableRegister drawableRegister, Level level) {
         super(Integer.MAX_VALUE - 10);
         this.assignedArea = assignedArea;
         this.weapon = weapon;
         this.drawableRegister = drawableRegister;
+        this.level = level;
 
         // middle of the platform
         this.position = new Point(getRandomPosition(assignedArea), assignedArea.getUpperLeft().getY() - height);
@@ -157,8 +160,11 @@ public abstract class Enemy extends Drawable implements Collidible, DamageInflic
 
         if (weapon != null) {
             if (isFacingPlayer(player) && isCloseEnoughToPlayerToShoot(player) && !isDead && (globalFrame - weaponUsedAtFrame > 50)) {
-                weapon.shoot(position, direction).stream().forEach(projectile -> drawableRegister.add(projectile));
-                weaponUsedAtFrame = globalFrame;
+                if (direction.equals(Direction.LEFT) && level.getNearestCollidibleLeft(this) != null && level.getNearestCollidibleLeft(this).equals(player)
+                        || direction.equals(Direction.RIGHT) && level.getNearestCollidibleRight(this) != null && level.getNearestCollidibleRight(this).equals(player)) {
+                    weapon.shoot(position, direction).stream().forEach(projectile -> drawableRegister.add(projectile));
+                    weaponUsedAtFrame = globalFrame;
+                }
             }
         }
 
