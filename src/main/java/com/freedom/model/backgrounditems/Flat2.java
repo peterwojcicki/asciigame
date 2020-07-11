@@ -9,6 +9,8 @@ public class Flat2 extends Drawable {
 
     public Flat2(Point initialPosition) {
         super(100);
+
+
         this.position = initialPosition;
     }
 
