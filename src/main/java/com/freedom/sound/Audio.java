@@ -4,7 +4,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
-import java.io.File;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
@@ -35,7 +35,7 @@ public class Audio {
 
     public void playOnce() {
         try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(getClass().getResourceAsStream("/" + filename));
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(getClass().getResourceAsStream("/" + filename)));
 
             int BUFFER_SIZE = 128000;
             AudioFormat audioFormat = null;
