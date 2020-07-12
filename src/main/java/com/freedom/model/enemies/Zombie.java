@@ -77,14 +77,16 @@ public class Zombie extends Enemy {
                 pencil.print(Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-" + Symbols.SINGLE_LINE_BOTTOM_LEFT_CORNER + "-x");
             }
         } else {
-            pencil.moveTo(x - 4, y + 2);
+            pencil.moveTo(x - 3, y + 2);
             pencil.print(Symbols.BULLET);
-            pencil.moveTo(x - 4, y + 2);
-            pencil.print("\\            /" + Symbols.TRIANGLE_DOWN_POINTING_BLACK);
-            pencil.moveTo(x + 3, y + 2);
-            pencil.print(Symbols.TRIANGLE_DOWN_POINTING_BLACK);
             pencil.moveTo(x - 2, y + 2);
-            pencil.print("|    |");
+            pencil.print('.');
+            pencil.moveTo(x + 2, y + 2);
+            pencil.print('.');
+            pencil.moveTo(x + 3, y + 2);
+            pencil.print('.');
+            pencil.moveTo(x - 2, y + 2);
+            pencil.print('.');
         }
     }
 

@@ -12,7 +12,7 @@ public class VenomLauncher extends Weapon {
     private Audio swooshSound;
 
     public VenomLauncher(){
-        swooshSound = new Audio("sounds/swoosh.wav");
+        swooshSound = new Audio("sounds/woosh.wav");
     }
 
     @Override

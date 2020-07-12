@@ -13,7 +13,7 @@ public class FireballLauncher extends Weapon {
     private Audio swooshSound;
 
     public FireballLauncher(){
-        swooshSound = new Audio("sounds/spider_screech.wav");
+        swooshSound = new Audio("sounds/swoosh.wav");
     }
 
     @Override
